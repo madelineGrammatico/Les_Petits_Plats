@@ -1,7 +1,46 @@
-.card__recipes {
+.card__Recipes a {
   background-color: #E7E7E7;
-  aspect-ratio: 1/0.8;
-  border: solid 3px hotpink;
+  aspect-ratio: 1/0.95;
+  border-radius: 5px;
+  display: grid;
+  grid-template-rows: 4fr 1fr 3fr;
+  grid-template-columns: 2fr 1fr 1fr;
+  outline: none;
+  text-decoration: none;
+}
+.card__Recipes a span {
+  color: black;
+  text-decoration: none;
+  font-family: "Lato";
+  padding: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card__Recipes a img {
+  background: #C7BEBE;
+  border-radius: 5px 5px 0px 0px;
+  width: 100%;
+  aspect-ratio: 1/0.43;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  grid-column: 1/span 3;
+}
+.card__Recipes a .card__title {
+  grid-column: 1/span 2;
+  grid-row: 2;
+}
+.card__Recipes a .card__duration {
+  grid-column: 3;
+  grid-row: 2;
+}
+.card__Recipes a .card__ingredients {
+  grid-column: 1;
+  grid-row: 3;
+}
+.card__Recipes a .card__recipe {
+  grid-column: 2/span 3;
+  grid-row: 3;
 }
 
 header {
@@ -29,6 +68,7 @@ header form .search__recipe {
   border-radius: 5px;
   border: none;
   padding: 24px;
+  margin-bottom: 25px;
 }
 header form .search__recipe ::placeholder {
   font-family: "Lato";
@@ -46,6 +86,7 @@ header form .search__ingredient {
   border: none;
   padding: 24px;
   color: white;
+  margin-bottom: 25px;
 }
 header form .search__ingredient ::placeholder {
   font-family: "Lato";
@@ -63,6 +104,7 @@ header form .search__appliance {
   border: none;
   padding: 24px;
   color: #ffffff;
+  margin-bottom: 25px;
 }
 header form .search__appliance ::placeholder {
   font-family: "Lato";
@@ -79,6 +121,7 @@ header form .search__utensils {
   border: none;
   padding: 24px;
   color: #ffffff;
+  margin-bottom: 25px;
 }
 header form .search__utensils ::placeholder {
   font-family: "Lato";
@@ -93,6 +136,10 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 30px;
+}
+
+body {
+  margin: 50px 100px;
 }
 
 /*# sourceMappingURL=style.css.map */
