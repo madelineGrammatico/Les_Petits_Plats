@@ -6,7 +6,6 @@ searchRecipe.addEventListener('input', findMatches);
 
 function displayCard(data) {
     const cardContainer = document.querySelector("main");
-    console.log(cardContainer);
     cardContainer.innerHTML = "";
     data.forEach((recipe) => {
         const card = document.createElement('article');
@@ -23,17 +22,12 @@ function displayCard(data) {
 }
 
 function findMatches(e) {
-    result = []
+   
     if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length < 3) {
         displayCard(recipes);
     } else if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length >= 3) {
-        recipes.forEach((recipe)=> {
-            
-            if (recipe.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1) {
-                result.push(recipe)
-            }
-            displayCard(result)
-        })
-            
+        result = recipes.filter(recipe => recipe.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1)
+        console.log(result)
+        displayCard(result)       
     }
 }
