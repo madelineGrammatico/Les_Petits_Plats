@@ -22,12 +22,13 @@ function displayCard(data) {
 }
 
 function findMatches(e) {
-   
     if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length < 3) {
         displayCard(recipes);
     } else if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length >= 3) {
-        result = recipes.filter(recipe => recipe.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1)
-        console.log(result)
+        result = recipes.filter(recipe => recipe.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1
+            || recipe.ingredients.map((item) => {return item.ingredient}).join(" ").toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1
+            || recipe.description.toLowerCase().indexOf(e.currentTarget.value.toLowerCase())!== -1
+        )
         displayCard(result)       
     }
 }
