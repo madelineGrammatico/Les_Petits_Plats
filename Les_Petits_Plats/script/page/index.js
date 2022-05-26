@@ -3,6 +3,8 @@ const result = [];
 if (result.length === 0) {
     displayCard();
 }
+const searchRecipe = document.querySelector('.search__recipe');
+searchRecipe.addEventListener('input', findMatches)
 function displayCard() {
     const cardContainer = document.querySelector("main");
     recipes.forEach((recipe) => {
@@ -17,5 +19,11 @@ function displayCard() {
                         </a>`;
         cardContainer.appendChild(card);
     })
+}
+function findMatches(e) {
+    
+    if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length >= 3) {
+        console.log(e.currentTarget.value.length )
 
+    }
 }
