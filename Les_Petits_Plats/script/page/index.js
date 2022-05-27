@@ -4,6 +4,11 @@ const searchRecipe = document.querySelector('.search__recipe');
 displayCard(recipes);
 searchRecipe.addEventListener('input', findMatches);
 
+function stringifyIngredients(ingredient, quantity = "", unit = "") {
+    return`${ingredient} : ${quantity} ${unit}`
+            
+}
+
 function displayCard(data) {
     const cardContainer = document.querySelector("main");
     cardContainer.innerHTML = "";
@@ -14,10 +19,20 @@ function displayCard(data) {
                             <img src="" alt=""></img>
                             <span class="card__title">${recipe.name}</span>
                             <span class="card__duration">${recipe.time} min</span>
-                            <span class="card__ingredients">${recipe.ingredients[0].ingredient}</span>
+                            <div class="card__ingredients"></div>
                             <span class="card__recipe">${recipe.description}</span>
                         </a>`;
         cardContainer.appendChild(card);
+        const dataCardContainer = card.querySelector(".card__ingredients")
+        
+        recipe.ingredients.map((object) => {
+            const inner =  stringifyIngredients(object.ingredient, object.quantity, object.unit)
+            const divIngredients = document.createElement('span')
+            divIngredients.classList.add("ingedient__span")
+            divIngredients.innerHTML = inner
+            dataCardContainer.appendChild(divIngredients)
+        })
+
     })
 }
 
