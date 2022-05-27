@@ -24,12 +24,14 @@
         border: none;
         outline: none;
         box-shadow: none;
+        grid-column: 1;
+        grid-row: 1;
     }
 
-    .card__containerData {
+    .card__data {
         background-color: #E7E7E7;
         display: grid ;
-        grid-template-rows: 1fr 2fr;
+        grid-template-rows: 1fr 3fr;
         grid-template-columns: 2fr 1fr 1fr;
         aspect-ratio: 1/0.52;
         padding: 15px;
@@ -45,7 +47,7 @@
     }
     .card__ingredients {
         grid-column: 1;
-        grid-row: 3;
+        grid-row: 2;
         display: flex; 
         flex-direction: column;
 

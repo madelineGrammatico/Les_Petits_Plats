@@ -16,20 +16,22 @@ function displayCard(data) {
         card.classList.add('card__Recipes');
         card.innerHTML = `<a href="">
                             <img src="" alt=""></img>
-                            <span class="card__title">${recipe.name}</span>
-                            <span class="card__duration">${recipe.time} min</span>
-                            <div class="card__ingredients"></div>
-                            <span class="card__recipe">${recipe.description}</span>
+                            <div class="card__data">
+                                <span class="card__title">${recipe.name}</span>
+                                <span class="card__duration">${recipe.time} min</span>
+                                <div class="card__ingredients"></div>
+                                <span class="card__recipe">${recipe.description}</span>
+                            </div>
                         </a>`;
         cardContainer.appendChild(card);
-        const dataCardContainer = card.querySelector(".card__ingredients")
+        const divContainer = card.querySelector(".card__ingredients")
         
         recipe.ingredients.forEach((object) => {
             const inner =  stringifyIngredients(object.ingredient, object.quantity, object.unit)
             const containerIngredients = document.createElement('span')
             containerIngredients.classList.add("ingedient__span")
             containerIngredients.innerHTML = inner
-            dataCardContainer.appendChild(containerIngredients)
+            divContainer.appendChild(containerIngredients)
         })
     })
 }
