@@ -19,9 +19,21 @@
         <form>
             <input type="search" class="search__recipe" placeholder="Rechercher une recette"><i></i></input>
 
-            <input type="select" class="search__ingredient" placeholder="Ingrédients"><i class="fas fa-chevron-down"></i></input>
-            <input type="select" class="search__appliance" placeholder="Appareils"><i class="fas fa-chevron-down"></i></input>
-            <input type="select" class="search__utensils" placeholder="Ustensiles"><i class="fas fa-chevron-down"></i></input>
+            <div class="advencedSearch__ingredient__container">
+                <button class="search__ingredient">Ingredients <i class="fas fa-chevron-down"></i></button>
+                <input type="search" class="search__ingredient" placeholder="Rechercher un ingredient"><i class="fas fa-chevron-up"></i></input>
+                <div class="search__ingredient"></div>
+            </div>
+            <div class="advencedSearch__appliance__container">
+                <button class="search__appliance">Appareils <i class="fas fa-chevron-down"></i></button>
+                <input type="search" class="search__appliance" placeholder="Rechercher un appareil"><i class="fas fa-chevron-up"></i></input>
+                <div class="search__appliance"></div>
+            </div>
+            <div class="advencedSearch__utensils__container">
+                <button class="search__utensils">Ustensils <i class="fas fa-chevron-down"></i></button>
+                <input type="search" class="search__utensils" placeholder="Rechercher un ustensile"><i class="fas fa-chevron-up"></i></input>
+                <div class="search__utensils"></div>
+            </div>
         </form>
     </header>
     <main>

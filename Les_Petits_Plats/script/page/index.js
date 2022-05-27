@@ -18,7 +18,7 @@ function displayCard(data) {
                             <img src="" alt=""></img>
                             <div class="card__data">
                                 <span class="card__title">${recipe.name}</span>
-                                <span class="card__duration">${recipe.time} min</span>
+                                <span class="card__duration"><i class="far fa-clock"></i> ${recipe.time} min</span>
                                 <div class="card__ingredients"></div>
                                 <span class="card__recipe">${recipe.description}</span>
                             </div>

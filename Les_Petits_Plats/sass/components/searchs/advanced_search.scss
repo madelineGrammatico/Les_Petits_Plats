@@ -1,0 +1,72 @@
+.advencedSearch__ingredient__container,
+ .advencedSearch__appliance__container,
+  .advencedSearch__utensils__container {
+    button, input, div {
+        position: absolute;
+    }
+    input, div {
+       display: none;
+    }
+}
+
+.search__ingredient {
+    background: #3282F7;
+    border-radius: 5px;
+    height: 69px;
+    border: none;
+    padding: 24px;
+    color: white;
+    margin-bottom: 25px;
+   
+    ::placeholder{
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 22px;
+        color: white;
+        opacity: 1;
+    }
+   }
+
+
+   .search__appliance {
+    background: #68D9A4;
+    border-radius: 5px;
+    height: 69px;
+    border: none;
+    padding: 24px;
+    color: #ffffff;
+    margin-bottom: 25px;
+    
+
+    ::placeholder{
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 22px;
+        color: #ffffff;
+    }
+   }
+   
+   .search__utensils {
+    background: #ED6454;
+    border-radius: 5px;
+    height: 69px;
+    border: none;
+    padding: 24px;
+    color: #ffffff;
+    margin-bottom: 25px;
+    
+
+    ::placeholder{
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 22px;
+        color: #ffffff;
+            
+    }
+   }
