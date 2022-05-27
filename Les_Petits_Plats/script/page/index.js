@@ -10,10 +10,12 @@ function displayCard() {
         card.classList.add('card__Recipes');
         card.innerHTML = `<a href="">
                             <img src="" alt=""></img>
-                            <span class="card__title">${recipe.name}</span>
-                            <span class="card__duration">${recipe.time} min</span>
-                            <span class="card__ingredients">${recipe.ingredients[0].ingredient}</span>
-                            <span class="card__recipe">${recipe.description}</span>
+                            <div class="card__containerData">
+                                <span class="card__title">${recipe.name}</span>
+                                <span class="card__duration">${recipe.time} min</span>
+                                <div class="card__ingredients">${recipe.ingredients[0].ingredient}</div>
+                                <span class="card__recipe">${recipe.description}</span>
+                            </div>
                         </a>`;
         cardContainer.appendChild(card);
     })

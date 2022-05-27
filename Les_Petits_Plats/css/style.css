@@ -1,22 +1,18 @@
-.card__Recipes a {
-  background-color: #E7E7E7;
+.card__Recipes {
   aspect-ratio: 1/0.95;
   border-radius: 5px;
-  display: grid;
-  grid-template-rows: 4fr 1fr 3fr;
-  grid-template-columns: 2fr 1fr 1fr;
+  border: solid 3px hotpink;
   outline: none;
   text-decoration: none;
 }
-.card__Recipes a span {
+.card__Recipes span {
   color: black;
   text-decoration: none;
   font-family: "Lato";
-  padding: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.card__Recipes a img {
+.card__Recipes img {
   background: #C7BEBE;
   border-radius: 5px 5px 0px 0px;
   width: 100%;
@@ -24,23 +20,29 @@
   border: none;
   outline: none;
   box-shadow: none;
-  grid-column: 1/span 3;
 }
-.card__Recipes a .card__title {
+.card__Recipes .card__containerData {
+  background-color: #E7E7E7;
+  display: grid;
+  grid-template-rows: 1fr 3fr;
+  grid-template-columns: 2fr 1fr 1fr;
+  aspect-ratio: 1/0.52;
+}
+.card__Recipes .card__title {
   grid-column: 1/span 2;
-  grid-row: 2;
+  grid-row: 1;
 }
-.card__Recipes a .card__duration {
+.card__Recipes .card__duration {
   grid-column: 3;
+  grid-row: 1;
+}
+.card__Recipes .card__ingredients {
+  grid-column: 1;
   grid-row: 2;
 }
-.card__Recipes a .card__ingredients {
-  grid-column: 1;
-  grid-row: 3;
-}
-.card__Recipes a .card__recipe {
+.card__Recipes .card__recipe {
   grid-column: 2/span 3;
-  grid-row: 3;
+  grid-row: 2;
 }
 
 header {
