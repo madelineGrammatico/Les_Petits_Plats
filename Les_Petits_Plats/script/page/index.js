@@ -1,8 +1,30 @@
 let result = [];
 const searchRecipe = document.querySelector('.search__recipe');
+const searchAdvenceContainer = document.querySelectorAll(".advencedSearch__container");
 
 displayCard(recipes);
 searchRecipe.addEventListener('input', findMatches);
+
+searchAdvenceContainer.forEach((div)=> {
+    div.addEventListener('mouseenter', displaySearchAdvenced)
+    div.addEventListener('mouseleave', displayBtnSearchAdvenced)
+    
+})
+
+function displaySearchAdvenced(e) {
+    e.stopPropagation()
+    const btn = e.currentTarget.querySelector("button")
+    btn.style.display = "none"
+    btn.nextElementSibling.style.display = "block"
+
+}
+function displayBtnSearchAdvenced(e) {
+    e.stopPropagation()
+    const btn = e.target.querySelector("button")
+    btn.style.display = "block"
+    btn.nextElementSibling.style.display = "none"
+
+}
 
 function stringifyIngredients(ingredient, quantity = "", unit="") {
     return `${ingredient} : ${quantity} ${unit}`
