@@ -17,8 +17,12 @@ searchAdvenceContainer.forEach((div)=> {
 function displaySearchAdvenced(e) {
     e.stopPropagation()
     const btn = e.currentTarget.querySelector("button")
+    const div = e.currentTarget.querySelector(".search__tag")
     btn.style.display = "none"
     btn.nextElementSibling.style.display = "block"
+    console.log(div)
+    div.innerHTML != "" ? div.style.display = "flex" : div.style.display = "none"
+    
 
 }
 function displayBtnSearchAdvenced(e) {
@@ -61,6 +65,18 @@ function displayCard(data) {
     })
 }
 
+function displayTagInSearch(tab, searchClass){
+    const searchDiv = document.querySelector(searchClass)
+    searchDiv.inner = ""
+    tab.forEach((item) => {
+        const tag = document.createElement("span")
+        tag.classList.add("searchTag")
+        tag.innerHTML = item
+        searchDiv.appendChild(tag)
+
+    })
+
+}
 
 
 function findMatches(e) {
@@ -90,6 +106,7 @@ function findMatches(e) {
         }) 
         ingredientsTagTab = Array.from( new Set(ingredientsTagTab))
         console.log(ingredientsTagTab)
+        displayTagInSearch(ingredientsTagTab, ".ingredient__tag")
 
         result.forEach((card) => {
             card.ustensils.forEach((ustensils) => {
@@ -98,12 +115,14 @@ function findMatches(e) {
         }) 
         ustensilsTagTab = Array.from( new Set(ustensilsTagTab))
         console.log(ustensilsTagTab)
+        displayTagInSearch(ustensilsTagTab, ".ustensil__tag")
 
         result.forEach((card) => {
                 appliancesTagTab.push(card.appliance.toLowerCase())
         }) 
         appliancesTagTab = Array.from( new Set(appliancesTagTab))
         console.log(appliancesTagTab)
+        displayTagInSearch(appliancesTagTab, ".appliance__tag")
     }
     // function findMatchesAdvSearch(search, tab){
     //     result.forEach((card) => {

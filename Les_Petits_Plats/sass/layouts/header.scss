@@ -19,6 +19,7 @@ header {
        display: grid;
        grid-template-rows: 1fr 1fr;
        grid-template-columns: auto auto auto;
+       position: absolute;
 
        .search__recipe {
             grid-column: 1 /span 3;
@@ -28,9 +29,7 @@ header {
        .advencedSearch__ingredient__container,
         .advencedSearch__appliance__container,
         .advencedSearch__utensils__container {
-            button, input, div {
-                position: absolute;
-            }
+          bottom :200px
         }
         
        .advencedSearch__ingredient__container {

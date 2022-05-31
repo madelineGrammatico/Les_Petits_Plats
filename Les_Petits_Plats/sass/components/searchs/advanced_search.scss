@@ -1,27 +1,84 @@
-.advencedSearch__ingredient__container,
- .advencedSearch__appliance__container,
-  .advencedSearch__utensils__container {
-    button, input, div {
-        position: absolute;
-    }
-    input, div {
-       display: none;
-    }
+
+.search__ingredient,
+.search__appliance,
+.search__ustensil  {
+    display: none;
 }
-// .searchAdvenced {
-//     width: 25%;
-// }
+
+.btn__ingredient {
+    background: #3282F7;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+    height: 69px;
+}
+.btn__appliance {
+    background: #68D9A4;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+    height: 69px;
+}
+.btn__ustensil {
+    background: #ED6454;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+    height: 69px;
+}
 
 .search__ingredient {
     background: #3282F7;
     border-radius: 5px;
-    height: 69px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+
+    .search__input {
+        background: #3282F7;
+    }
+}
+
+.search__appliance {
+    background: #68D9A4;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+
+    .search__input {
+        background: #68D9A4;
+    }
+}
+
+.search__ustensil {
+    background: #ED6454;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+
+    .search__input {
+        background: #ED6454;
+    }
+}
+
+.search__input {
+    width: 100%;
     border: none;
     padding: 24px;
     color: white;
-    margin-bottom: 25px;
-    // width: 25%;
-   
+    height: 69px;
+
     ::placeholder{
         font-family: 'Lato';
         font-style: normal;
@@ -31,46 +88,12 @@
         color: white;
         opacity: 1;
     }
-   }
+}
 
-
-   .search__appliance {
-    background: #68D9A4;
-    border-radius: 5px;
-    height: 69px;
+   .search__tag {
+    flex-direction: column;
+    width: 100%;
     border: none;
     padding: 24px;
-    color: #ffffff;
-    margin-bottom: 25px;
-    
-
-    ::placeholder{
-        font-family: 'Lato';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 22px;
-        color: #ffffff;
-    }
-   }
-   
-   .search__utensils {
-    background: #ED6454;
-    border-radius: 5px;
-    height: 69px;
-    border: none;
-    padding: 24px;
-    color: #ffffff;
-    margin-bottom: 25px;
-    
-
-    ::placeholder{
-        font-family: 'Lato';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 22px;
-        color: #ffffff;
-            
-    }
-   }
+    color: white;
+}

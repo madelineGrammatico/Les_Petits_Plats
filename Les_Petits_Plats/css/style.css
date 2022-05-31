@@ -1,30 +1,83 @@
-.advencedSearch__ingredient__container button, .advencedSearch__ingredient__container input, .advencedSearch__ingredient__container div,
-.advencedSearch__appliance__container button,
-.advencedSearch__appliance__container input,
-.advencedSearch__appliance__container div,
-.advencedSearch__utensils__container button,
-.advencedSearch__utensils__container input,
-.advencedSearch__utensils__container div {
-  position: absolute;
-}
-.advencedSearch__ingredient__container input, .advencedSearch__ingredient__container div,
-.advencedSearch__appliance__container input,
-.advencedSearch__appliance__container div,
-.advencedSearch__utensils__container input,
-.advencedSearch__utensils__container div {
+.search__ingredient,
+.search__appliance,
+.search__ustensil {
   display: none;
+}
+
+.btn__ingredient {
+  background: #3282F7;
+  border-radius: 5px;
+  border: none;
+  padding: 0px 24px;
+  color: white;
+  margin-bottom: 25px;
+  height: 69px;
+}
+
+.btn__appliance {
+  background: #68D9A4;
+  border-radius: 5px;
+  border: none;
+  padding: 0px 24px;
+  color: white;
+  margin-bottom: 25px;
+  height: 69px;
+}
+
+.btn__ustensil {
+  background: #ED6454;
+  border-radius: 5px;
+  border: none;
+  padding: 0px 24px;
+  color: white;
+  margin-bottom: 25px;
+  height: 69px;
 }
 
 .search__ingredient {
   background: #3282F7;
   border-radius: 5px;
-  height: 69px;
   border: none;
-  padding: 24px;
+  padding: 0px 24px;
   color: white;
   margin-bottom: 25px;
 }
-.search__ingredient ::placeholder {
+.search__ingredient .search__input {
+  background: #3282F7;
+}
+
+.search__appliance {
+  background: #68D9A4;
+  border-radius: 5px;
+  border: none;
+  padding: 0px 24px;
+  color: white;
+  margin-bottom: 25px;
+}
+.search__appliance .search__input {
+  background: #68D9A4;
+}
+
+.search__ustensil {
+  background: #ED6454;
+  border-radius: 5px;
+  border: none;
+  padding: 0px 24px;
+  color: white;
+  margin-bottom: 25px;
+}
+.search__ustensil .search__input {
+  background: #ED6454;
+}
+
+.search__input {
+  width: 100%;
+  border: none;
+  padding: 24px;
+  color: white;
+  height: 69px;
+}
+.search__input ::placeholder {
   font-family: "Lato";
   font-style: normal;
   font-weight: 400;
@@ -34,40 +87,12 @@
   opacity: 1;
 }
 
-.search__appliance {
-  background: #68D9A4;
-  border-radius: 5px;
-  height: 69px;
+.search__tag {
+  flex-direction: column;
+  width: 100%;
   border: none;
   padding: 24px;
-  color: #ffffff;
-  margin-bottom: 25px;
-}
-.search__appliance ::placeholder {
-  font-family: "Lato";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-  color: #ffffff;
-}
-
-.search__utensils {
-  background: #ED6454;
-  border-radius: 5px;
-  height: 69px;
-  border: none;
-  padding: 24px;
-  color: #ffffff;
-  margin-bottom: 25px;
-}
-.search__utensils ::placeholder {
-  font-family: "Lato";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-  color: #ffffff;
+  color: white;
 }
 
 .search__recipe {
@@ -186,19 +211,16 @@ header form {
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: auto auto auto;
+  position: absolute;
 }
 header form .search__recipe {
   grid-column: 1/span 3;
   grid-row: 1;
 }
-header form .advencedSearch__ingredient__container button, header form .advencedSearch__ingredient__container input, header form .advencedSearch__ingredient__container div,
-header form .advencedSearch__appliance__container button,
-header form .advencedSearch__appliance__container input,
-header form .advencedSearch__appliance__container div,
-header form .advencedSearch__utensils__container button,
-header form .advencedSearch__utensils__container input,
-header form .advencedSearch__utensils__container div {
-  position: absolute;
+header form .advencedSearch__ingredient__container,
+header form .advencedSearch__appliance__container,
+header form .advencedSearch__utensils__container {
+  bottom: 200px;
 }
 header form .advencedSearch__ingredient__container {
   grid-column: 1;
