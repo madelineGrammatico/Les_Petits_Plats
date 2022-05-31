@@ -1,4 +1,7 @@
 let result = [];
+let ingredientsTagTab = []
+let appliancesTagTab = []
+let ustensilsTagTab = []
 const searchRecipe = document.querySelector('.search__recipe');
 const searchAdvenceContainer = document.querySelectorAll(".advencedSearch__container");
 
@@ -58,19 +61,57 @@ function displayCard(data) {
     })
 }
 
+
+
 function findMatches(e) {
     result = []
+    ingredientsTagTab = []
+    appliancesTagTab = []
+    ustensilsTagTab = []
     if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length < 3) {
         displayCard(recipes);
     } else if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length >= 3) {
-        recipes.forEach(
-            ()=> {
-                result = recipes.filter(recipe => recipe.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1
-                    || recipe.ingredients.map((item) => {return item.ingredient}).join(" ").toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1
-                    || recipe.description.toLowerCase().indexOf(e.currentTarget.value.toLowerCase())!== -1
-                )
-                displayCard(result)
-            }
-        )    
+       
+        recipes.forEach(recipe => 
+            { if (recipe.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1 
+                || recipe.ingredients.forEach((item) => {item.ingredient.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1})
+                || recipe.description.toLowerCase().indexOf(e.currentTarget.value.toLowerCase())!== -1)
+            result.push(recipe)
+            })
+        displayCard(result)
+        
+            // findMatchesAdvSearch("ingredients", ingredientsTagTab)
+            // findMatchesAdvSearch("aplliances", appliancesTagTab)
+            // findMatchesAdvSearch("utensils", utensilsTagTab)
+        result.forEach((card) => {
+            card.ingredients.forEach((ingredient) => {
+                ingredientsTagTab.push(ingredient.ingredient.toLowerCase())
+            })
+        }) 
+        ingredientsTagTab = Array.from( new Set(ingredientsTagTab))
+        console.log(ingredientsTagTab)
+
+        result.forEach((card) => {
+            card.ustensils.forEach((ustensils) => {
+                ustensilsTagTab.push(ustensils.toLowerCase())
+            })
+        }) 
+        ustensilsTagTab = Array.from( new Set(ustensilsTagTab))
+        console.log(ustensilsTagTab)
+
+        result.forEach((card) => {
+                appliancesTagTab.push(card.appliance.toLowerCase())
+        }) 
+        appliancesTagTab = Array.from( new Set(appliancesTagTab))
+        console.log(appliancesTagTab)
     }
+    // function findMatchesAdvSearch(search, tab){
+    //     result.forEach((card) => {
+    //         card.search.forEach((tag) => {
+    //             (search === "ingredients") ? ingredientsTagTab.push(tag.ingredient.toLowerCase()) : ingredientsTagTab.push(tag.toLowerCase())
+    //         })
+    //     }) 
+    //     tab = Array.from( new Set(tab))
+    //     console.log(tab)
+    // }
 }
