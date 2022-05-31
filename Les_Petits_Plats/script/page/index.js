@@ -19,18 +19,15 @@ function displaySearchAdvenced(e) {
     const btn = e.currentTarget.querySelector("button")
     const div = e.currentTarget.querySelector(".search__tag")
     btn.style.display = "none"
-    btn.nextElementSibling.style.display = "block"
-    console.log(div)
+    btn.nextElementSibling.style.display = "grid"
     div.innerHTML != "" ? div.style.display = "flex" : div.style.display = "none"
-    
-
 }
+
 function displayBtnSearchAdvenced(e) {
     e.stopPropagation()
     const btn = e.target.querySelector("button")
     btn.style.display = "block"
     btn.nextElementSibling.style.display = "none"
-
 }
 
 function stringifyIngredients(ingredient, quantity = "", unit="") {
@@ -64,20 +61,42 @@ function displayCard(data) {
         })
     })
 }
+function findMatchesTag(e, tagContent) {
+    const array = []
+    result.forEach((recipe) => {
+        if (recipe.name.toLowerCase().indexOf(tagContent.toLowerCase()) !== -1 
+            || recipe.ingredients.forEach((item) => {item.ingredient.toLowerCase().indexOf(tagContent.toLowerCase()) !== -1})
+            || recipe.description.toLowerCase().indexOf(tagContent.toLowerCase()) !== -1
+            ) {array.push(recipe)} 
+    })
+    result = array
+    displayCard(result)
+}
+function activeTag(e) {
+    console.log(e.target.parentElement.classList[0].indexOf("ingredient") !== -1)
+    const tagContainer = document.querySelector(".tag__container")
+    const tag = document.createElement("span")
+    tag.classList.add("activeTag")
+    const tagContent = e.target.textContent
+    tag.innerHTML = tagContent + "<i class='far fa-times-circle'></i>"
+    if (e.target.parentElement.classList[0].indexOf("ingredient") !== -1) {tag.classList.add("tag--ingredient")}
+    else if (e.target.parentElement.classList[0].indexOf("appliance") !== -1) {tag.classList.add("tag--appliance")}
+    else if (e.target.parentElement.classList[0].indexOf("ustensil") !== -1) {tag.classList.add("tag--ustensil")}
+    tagContainer.appendChild(tag)
+    findMatchesTag(e, tagContent)
+}
 
 function displayTagInSearch(tab, searchClass){
     const searchDiv = document.querySelector(searchClass)
     searchDiv.inner = ""
     tab.forEach((item) => {
-        const tag = document.createElement("span")
+        let tag = document.createElement("span")
         tag.classList.add("searchTag")
         tag.innerHTML = item
         searchDiv.appendChild(tag)
-
+        tag = addEventListener("click", activeTag)
     })
-
 }
-
 
 function findMatches(e) {
     result = []
@@ -95,10 +114,7 @@ function findMatches(e) {
             result.push(recipe)
             })
         displayCard(result)
-        
-            // findMatchesAdvSearch("ingredients", ingredientsTagTab)
-            // findMatchesAdvSearch("aplliances", appliancesTagTab)
-            // findMatchesAdvSearch("utensils", utensilsTagTab)
+
         result.forEach((card) => {
             card.ingredients.forEach((ingredient) => {
                 ingredientsTagTab.push(ingredient.ingredient.toLowerCase())
@@ -124,13 +140,4 @@ function findMatches(e) {
         console.log(appliancesTagTab)
         displayTagInSearch(appliancesTagTab, ".appliance__tag")
     }
-    // function findMatchesAdvSearch(search, tab){
-    //     result.forEach((card) => {
-    //         card.search.forEach((tag) => {
-    //             (search === "ingredients") ? ingredientsTagTab.push(tag.ingredient.toLowerCase()) : ingredientsTagTab.push(tag.toLowerCase())
-    //         })
-    //     }) 
-    //     tab = Array.from( new Set(tab))
-    //     console.log(tab)
-    // }
 }

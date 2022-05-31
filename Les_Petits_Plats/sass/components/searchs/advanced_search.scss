@@ -3,6 +3,22 @@
 .search__appliance,
 .search__ustensil  {
     display: none;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: auto auto;
+    align-items: center;
+    .search__tag {
+        grid-column: 1 /span 2;
+        grid-row: 2 ;
+    }
+    input {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    i {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: flex-end;
+    }
 }
 
 .btn__ingredient {

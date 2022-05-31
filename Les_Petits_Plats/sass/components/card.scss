@@ -65,7 +65,8 @@
         grid-column: 1;
         grid-row: 2;
         font-family: 'Lato';
-
+        display :flex;
+        flex-direction: column;
         font-style: normal;
         font-weight: 700;
         font-size: 12px;

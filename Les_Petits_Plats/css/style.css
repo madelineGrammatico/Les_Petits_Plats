@@ -2,6 +2,28 @@
 .search__appliance,
 .search__ustensil {
   display: none;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: auto auto;
+  align-items: center;
+}
+.search__ingredient .search__tag,
+.search__appliance .search__tag,
+.search__ustensil .search__tag {
+  grid-column: 1/span 2;
+  grid-row: 2;
+}
+.search__ingredient input,
+.search__appliance input,
+.search__ustensil input {
+  grid-column: 1;
+  grid-row: 1;
+}
+.search__ingredient i,
+.search__appliance i,
+.search__ustensil i {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: flex-end;
 }
 
 .btn__ingredient {
@@ -173,6 +195,8 @@
   grid-column: 1;
   grid-row: 2;
   font-family: "Lato";
+  display: flex;
+  flex-direction: column;
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
@@ -209,13 +233,44 @@ header h1 {
 header form {
   width: 100%;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 0.05fr 1fr;
   grid-template-columns: auto auto auto;
   position: absolute;
 }
 header form .search__recipe {
   grid-column: 1/span 3;
   grid-row: 1;
+}
+header form .tag__container {
+  grid-column: 1/span 3;
+  grid-row: 2;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+header form .activeTag {
+  height: 37px;
+  background: #3282F7;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 15px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+}
+header form .tag--ingredient {
+  background: #3282F7;
+}
+header form .tag--appliance {
+  background: #68D9A4;
+}
+header form .tag--ustensil {
+  background: #ED6454;
 }
 header form .advencedSearch__ingredient__container,
 header form .advencedSearch__appliance__container,
@@ -224,23 +279,15 @@ header form .advencedSearch__utensils__container {
 }
 header form .advencedSearch__ingredient__container {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 3;
 }
 header form .advencedSearch__appliance__container {
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 3;
 }
 header form .advencedSearch__utensils__container {
   grid-column: 3;
-  grid-row: 2;
-}
-header form .advencedSearch__appliance__container {
-  grid-column: 2;
-  grid-row: 2;
-}
-header form .advencedSearch__utensils__container {
-  grid-column: 3;
-  grid-row: 2;
+  grid-row: 3;
 }
 
 main {
