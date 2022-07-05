@@ -1,3 +1,4 @@
+import recipes from "../../recipes.js"
 let result = [];
 let ingredientsTagTab = []
 let appliancesTagTab = []
@@ -15,6 +16,7 @@ searchAdvenceContainer.forEach((div)=> {
 })
 
 function displaySearchAdvenced(e) {
+    e.preventDefault()
     e.stopPropagation()
     const btn = e.currentTarget.querySelector("button")
     const div = e.currentTarget.querySelector(".search__tag")
@@ -61,9 +63,9 @@ function displayCard(data) {
         })
     })
 }
-function findMatchesTag(e, tagContent) {
+function findMatchesTag(recipes, tagContent) {
     const array = []
-    result.forEach((recipe) => {
+    recipes.forEach((recipe) => {
         if (recipe.name.toLowerCase().indexOf(tagContent.toLowerCase()) !== -1 
             || recipe.ingredients.forEach((item) => {item.ingredient.toLowerCase().indexOf(tagContent.toLowerCase()) !== -1})
             || recipe.description.toLowerCase().indexOf(tagContent.toLowerCase()) !== -1
@@ -72,8 +74,13 @@ function findMatchesTag(e, tagContent) {
     result = array
     displayCard(result)
 }
+function removeTag(e){
+
+    const tagContainer = document.querySelector(".tag__container")
+    tagContainer.removeChild(e.currentTarget)
+}
+
 function activeTag(e) {
-    console.log(e.target.parentElement.classList[0].indexOf("ingredient") !== -1)
     const tagContainer = document.querySelector(".tag__container")
     const tag = document.createElement("span")
     tag.classList.add("activeTag")
@@ -83,7 +90,8 @@ function activeTag(e) {
     else if (e.target.parentElement.classList[0].indexOf("appliance") !== -1) {tag.classList.add("tag--appliance")}
     else if (e.target.parentElement.classList[0].indexOf("ustensil") !== -1) {tag.classList.add("tag--ustensil")}
     tagContainer.appendChild(tag)
-    findMatchesTag(e, tagContent)
+    findMatchesTag(result, tagContent)
+    tag.addEventListener('click', removeTag)
 }
 
 function displayTagInSearch(tab, searchClass){
@@ -106,14 +114,8 @@ function findMatches(e) {
     if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length < 3) {
         displayCard(recipes);
     } else if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length >= 3) {
-       
-        recipes.forEach(recipe => 
-            { if (recipe.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1 
-                || recipe.ingredients.forEach((item) => {item.ingredient.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1})
-                || recipe.description.toLowerCase().indexOf(e.currentTarget.value.toLowerCase())!== -1)
-            result.push(recipe)
-            })
-        displayCard(result)
+    
+        findMatchesTag(recipes, e.currentTarget.value)
 
         result.forEach((card) => {
             card.ingredients.forEach((ingredient) => {
