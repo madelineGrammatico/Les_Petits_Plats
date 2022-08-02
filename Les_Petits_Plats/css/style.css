@@ -235,7 +235,6 @@ header form {
   display: grid;
   grid-template-rows: 1fr 0.05fr 1fr;
   grid-template-columns: auto auto auto;
-  position: absolute;
 }
 header form .search__recipe {
   grid-column: 1/span 3;
