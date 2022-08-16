@@ -1,5 +1,6 @@
 export default class AvencedSearch {
-    constructor() {
-        
+    constructor(result) {
+        this.result = result
+        this.searchsTagTab = new Set()
     }
 }

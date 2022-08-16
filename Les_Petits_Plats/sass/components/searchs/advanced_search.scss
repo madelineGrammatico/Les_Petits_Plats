@@ -2,6 +2,7 @@
 .search__ingredient,
 .search__appliance,
 .search__ustensil  {
+    position: absolute;
     display: none;
     grid-template-rows: 1fr auto;
     grid-template-columns: auto auto;
@@ -107,6 +108,7 @@
 }
 
    .search__tag {
+    
     flex-direction: column;
     width: 100%;
     border: none;

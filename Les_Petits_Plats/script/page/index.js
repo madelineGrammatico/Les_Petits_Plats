@@ -1,17 +1,65 @@
-import recipes from "../../recipes.js"
+import recipes from "../../recipes.js";
 import MainSearch from "../search/MainSearch.js";
+
+import IngredientsAdvSearch from "../search/IngredientsAdvSearch.js";
+import AppliancesAdvSearch from "../search/AppliancesAdvSearch.js";
+import UstensilsAdvSearch from "../search/UstensilsAdvSearch.js";
+
+let input = ""
 let result = [];
-let ingredientsTagTab = []
-let appliancesTagTab = []
-let ustensilsTagTab = []
+let ingredientsTagTab = new Set()
+let appliancesTagTab = new Set()
+let ustensilsTagTab = new Set()
+let tagTab = new Set()
+const options = { input, ingredientsTagTab, appliancesTagTab, ustensilsTagTab, tagTab }
+
 const searchRecipe = document.querySelector('.search__recipe');
 const searchAdvenceContainer = document.querySelectorAll(".advencedSearch__container");
 
-const mainSearch = new MainSearch
-mainSearch.displayAllRecipes(recipes)
+const mainSearch = new MainSearch(recipes)
+let ingredientSearch = new IngredientsAdvSearch(recipes)
+let applianceSearch = new AppliancesAdvSearch(recipes)
+let ustensilSearch = new UstensilsAdvSearch(recipes)
+
+mainSearch.displayRecipes()
+console.log(tagTab)
+ingredientsTagTab = ingredientSearch.displaySearchIngredients(options)
+appliancesTagTab = applianceSearch.displaySearchAppliances(options)
+ustensilsTagTab = ustensilSearch.displaySearchUstensils(options)
+
+
 searchRecipe.addEventListener('input', (e) => {
-    e.currentTarget.value.length >= 3 ? mainSearch.displayResult(recipes, e.target.value) : mainSearch.displayAllRecipes(recipes) 
+    input = e.currentTarget.value
+    if (input.length >= 3) { 
+        result = mainSearch.matchsRecipes(input)
+        if (result.length !== 0) {
+            console.log(tagTab)
+            mainSearch.displayRecipes(result)
+            ingredientSearch = new IngredientsAdvSearch(result, options)
+            ingredientsTagTab = ingredientSearch.displaySearchIngredients(options)
+
+            applianceSearch = new AppliancesAdvSearch(result, options)
+            appliancesTagTab = applianceSearch.displaySearchAppliances(options)
+
+            ustensilSearch = new UstensilsAdvSearch(result, options)
+            ustensilsTagTab = ustensilSearch.displaySearchUstensils(options)
+
+            console.log(tagTab)
+        } else {
+            mainSearch.displaysNoResult();
+            
+        }
+    }
+    else { 
+        mainSearch.displayRecipes()
+        ingredientSearch.displaySearchIngredients()
+        applianceSearch.displaySearchAppliances()
+        ustensilSearch.displaySearchUstensils()
+    }
 });
+
+// console.log(result)
+
 // displayCard(recipes);
 // searchRecipe.addEventListener('input', findMatches);
 
@@ -32,6 +80,7 @@ function displaySearchAdvenced(e) {
 }
 
 function displayBtnSearchAdvenced(e) {
+    e.preventDefault()
     e.stopPropagation()
     const btn = e.target.querySelector("button")
     btn.style.display = "block"
