@@ -1,5 +1,6 @@
-export default class MainSearch {
+export default class MainSearch  {
     constructor(recipes) {
+      
         this.recipes = recipes
         this.cardContainer = document.querySelector("main");
     }
@@ -37,6 +38,7 @@ export default class MainSearch {
             })
         })
     }
+    
     matchsRecipes(value) {
         const result = []
         const regex = new RegExp(value.toLowerCase())
@@ -49,6 +51,7 @@ export default class MainSearch {
         })
         return result
     }
+
     displaysNoResult() {
         this.clearContainer();
         const message = document.createElement('p');

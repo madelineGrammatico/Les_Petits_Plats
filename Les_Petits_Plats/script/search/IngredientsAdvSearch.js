@@ -2,31 +2,38 @@ import AvencedSearch from "./AvencedSeach.js";
 import tagFactory from "../factory/tagFactory.js";
 
 export default class IngredientsAdvSearch extends AvencedSearch{
-    constructor (result) {
-        super(result)
+    constructor (results) {
+        super(results)
+        this.searchDiv = document.querySelector('.ingredient__tag')
+        
     }
-    displaySearchIngredients(options) {
-        const searchDiv = document.querySelector('.ingredient__tag')
-        searchDiv.innerHTML = ""
-        this.result.forEach((recipes) => {
+    displaySearchIngredients() {
+        
+        this.results.forEach((recipes) => {
             recipes.ingredients.forEach((ingredient) => {
                 this.searchsTagTab.add(ingredient.ingredient.toLowerCase())
             })
         })
+        
+        return this
+
+    }
+    addTagEvent(newTag, options) {
+        newTag.addEventListener("click", (e) => { 
+            tagFactory(e, options)
+        })
+    }
+    addTag(options) {
+        this.searchDiv.innerHTML = ""
         this.searchsTagTab.forEach((ingredient)=> {
             let tag = document.createElement("span")
             tag.classList.add("searchTag")
             tag.innerHTML = ingredient
-            const newTag = searchDiv.appendChild(tag)
-            newTag.addEventListener("click", (e) => { 
-                tagFactory(e, options)
-                
-             })
-            
-    
-        })
-        return this.searchsTagTab
+            const newTag = this.searchDiv.appendChild(tag)
+            this.addTagEvent(newTag, options)
 
+        })
+        
     }
     
 }

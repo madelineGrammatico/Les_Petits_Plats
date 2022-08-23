@@ -2,13 +2,13 @@ import AvencedSearch from "./AvencedSeach.js";
 import tagFactory from "../factory/tagFactory.js";
 
 export default class UstensilsAdvSearch extends AvencedSearch{
-    constructor (result) {
-        super(result)
+    constructor (results) {
+        super(results)
     }
     displaySearchUstensils(options) {
         const searchDiv = document.querySelector('.ustensil__tag')
         searchDiv.innerHTML = ""
-        this.result.forEach((recipe) => {
+        this.results.forEach((recipe) => {
             recipe.ustensils.forEach((ustensil) => {
                 this.searchsTagTab.add(ustensil.toLowerCase())
             })

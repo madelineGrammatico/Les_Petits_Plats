@@ -6,12 +6,28 @@ import AppliancesAdvSearch from "../search/AppliancesAdvSearch.js";
 import UstensilsAdvSearch from "../search/UstensilsAdvSearch.js";
 
 let input = ""
-let result = [];
+let results = [];
 let ingredientsTagTab = new Set()
 let appliancesTagTab = new Set()
 let ustensilsTagTab = new Set()
-let tagTab = new Set()
-const options = { input, ingredientsTagTab, appliancesTagTab, ustensilsTagTab, tagTab }
+
+const options = { results, input, ingredientsTagTab, appliancesTagTab, ustensilsTagTab }
+
+const setAvencedSearch = (data = recipes) => {
+    ingredientSearch = new IngredientsAdvSearch(data)
+    applianceSearch = new AppliancesAdvSearch(data)
+    ustensilSearch = new UstensilsAdvSearch(data)
+
+}
+const displayAdvencedSearchs = () => {
+    ingredientsTagTab = ingredientSearch.displaySearchIngredients(options)
+    appliancesTagTab = applianceSearch.displaySearchAppliances(options)
+    ustensilsTagTab = ustensilSearch.displaySearchUstensils(options)
+
+    ingredientSearch.addTag(options)
+    // appliancesTagTab = applianceSearch.addTag(options)
+    // ustensilsTagTab = ustensilSearch.addTag(options)
+}
 
 const searchRecipe = document.querySelector('.search__recipe');
 const searchAdvenceContainer = document.querySelectorAll(".advencedSearch__container");
@@ -20,41 +36,27 @@ const mainSearch = new MainSearch(recipes)
 let ingredientSearch = new IngredientsAdvSearch(recipes)
 let applianceSearch = new AppliancesAdvSearch(recipes)
 let ustensilSearch = new UstensilsAdvSearch(recipes)
-
+setAvencedSearch()
 mainSearch.displayRecipes()
-console.log(tagTab)
-ingredientsTagTab = ingredientSearch.displaySearchIngredients(options)
-appliancesTagTab = applianceSearch.displaySearchAppliances(options)
-ustensilsTagTab = ustensilSearch.displaySearchUstensils(options)
-
+displayAdvencedSearchs()
 
 searchRecipe.addEventListener('input', (e) => {
-    input = e.currentTarget.value
-    if (input.length >= 3) { 
-        result = mainSearch.matchsRecipes(input)
-        if (result.length !== 0) {
-            console.log(tagTab)
-            mainSearch.displayRecipes(result)
-            ingredientSearch = new IngredientsAdvSearch(result, options)
-            ingredientsTagTab = ingredientSearch.displaySearchIngredients(options)
-
-            applianceSearch = new AppliancesAdvSearch(result, options)
-            appliancesTagTab = applianceSearch.displaySearchAppliances(options)
-
-            ustensilSearch = new UstensilsAdvSearch(result, options)
-            ustensilsTagTab = ustensilSearch.displaySearchUstensils(options)
-
-            console.log(tagTab)
+    if (e.currentTarget.value.length >= 3) { 
+        options.input = e.currentTarget.value
+        options.results = mainSearch.matchsRecipes(options.input)
+        if (options.results.length !== 0) {
+            mainSearch.displayRecipes(options.results)
+            setAvencedSearch(options.results)
+            displayAdvencedSearchs()
         } else {
             mainSearch.displaysNoResult();
-            
         }
     }
     else { 
+        options.results = []
+        options.input = ""
         mainSearch.displayRecipes()
-        ingredientSearch.displaySearchIngredients()
-        applianceSearch.displaySearchAppliances()
-        ustensilSearch.displaySearchUstensils()
+        displayAdvencedSearchs()
     }
 });
 
@@ -62,6 +64,7 @@ searchRecipe.addEventListener('input', (e) => {
 
 // displayCard(recipes);
 // searchRecipe.addEventListener('input', findMatches);
+
 
 searchAdvenceContainer.forEach((div)=> {
     div.addEventListener('mouseenter', displaySearchAdvenced)
