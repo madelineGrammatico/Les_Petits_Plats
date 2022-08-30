@@ -3,6 +3,7 @@ import Tag from "./Tag.js";
 export default class UstensilTag extends Tag {
     constructor(value, options) {
         super(value, options)
+        this.searchTab = "ustensilsTagTab"
         this.searchContainer = document.querySelector(".ustensil__tag")
     }
     displayTag(e, options){
@@ -12,6 +13,8 @@ export default class UstensilTag extends Tag {
         tag.classList.add('tag--ustensil')
         const search = e.target
         this.searchContainer.removeChild(search)
+        options = this.ultimateMatchesRecipes(options)
+        return options
     }
 
 }

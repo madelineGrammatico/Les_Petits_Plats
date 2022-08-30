@@ -1,7 +1,9 @@
-export default class MainSearch  {
+import GlobalSearch from "../globalSearch/GlobalSearch.js";
+
+export default class MainSearch  extends GlobalSearch {
     constructor(recipes) {
-      
-        this.recipes = recipes
+        super(recipes)
+        
         this.cardContainer = document.querySelector("main");
     }
     clearContainer() {
@@ -58,4 +60,5 @@ export default class MainSearch  {
         message.textContent = "aucun résultat trouvé"
         this.cardContainer.appendChild(message);
     }
+    
 }

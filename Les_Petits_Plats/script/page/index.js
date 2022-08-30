@@ -6,10 +6,29 @@ import AppliancesAdvSearch from "../search/AppliancesAdvSearch.js";
 import UstensilsAdvSearch from "../search/UstensilsAdvSearch.js";
 
 let input = ""
-let results = [];
+let results = new Set()
 let ingredientsTagTab = new Set()
 let appliancesTagTab = new Set()
 let ustensilsTagTab = new Set()
+
+const allIngredients = new Set()
+recipes.forEach((recipe)=> {
+    recipe.ingredients.forEach((ingredient) => {
+        allIngredients.add(ingredient.ingredient.toLowerCase())
+    })
+})
+
+const allAppliances = new Set()
+recipes.forEach((recipe)=> {
+        allAppliances.add(recipe.appliance.toLowerCase())
+})
+
+const allUstensils = new Set()
+recipes.forEach((recipes)=> {
+    recipes.ustensils.forEach((ustensil) => {
+        allUstensils.add(ustensil.toLowerCase())
+    })
+})
 
 const options = { results, input, ingredientsTagTab, appliancesTagTab, ustensilsTagTab }
 
@@ -20,13 +39,13 @@ const setAvencedSearch = (data = recipes) => {
 
 }
 const displayAdvencedSearchs = () => {
-    ingredientsTagTab = ingredientSearch.displaySearchIngredients(options)
-    appliancesTagTab = applianceSearch.displaySearchAppliances(options)
-    ustensilsTagTab = ustensilSearch.displaySearchUstensils(options)
+    ingredientsTagTab = ingredientSearch.addSearchIngredients()
+    appliancesTagTab = applianceSearch.addSearchAppliances()
+    ustensilsTagTab = ustensilSearch.addSearchUstensils()
 
-    ingredientSearch.addTag(options)
-    // appliancesTagTab = applianceSearch.addTag(options)
-    // ustensilsTagTab = ustensilSearch.addTag(options)
+    ingredientSearch.displaySearch(options)
+    applianceSearch.displaySearch(options)
+    ustensilSearch.displaySearch(options)
 }
 
 const searchRecipe = document.querySelector('.search__recipe');
@@ -37,13 +56,16 @@ let ingredientSearch = new IngredientsAdvSearch(recipes)
 let applianceSearch = new AppliancesAdvSearch(recipes)
 let ustensilSearch = new UstensilsAdvSearch(recipes)
 setAvencedSearch()
+
 mainSearch.displayRecipes()
 displayAdvencedSearchs()
 
 searchRecipe.addEventListener('input', (e) => {
     if (e.currentTarget.value.length >= 3) { 
         options.input = e.currentTarget.value
-        options.results = mainSearch.matchsRecipes(options.input)
+        // options.results = mainSearch.matchsRecipes(options.input)
+        options.results = mainSearch.ultimateMatchesRecipes(options)
+        console.log(options.results.length !== 0)
         if (options.results.length !== 0) {
             mainSearch.displayRecipes(options.results)
             setAvencedSearch(options.results)
@@ -55,7 +77,8 @@ searchRecipe.addEventListener('input', (e) => {
     else { 
         options.results = []
         options.input = ""
-        mainSearch.displayRecipes()
+        mainSearch.ultimateMatchesRecipes(options)
+        setAvencedSearch(options.results)
         displayAdvencedSearchs()
     }
 });

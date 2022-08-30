@@ -1,5 +1,8 @@
-export default class Tag {
-    constructor() {
+import GlobalSearch from "../globalSearch/GlobalSearch.js";
+
+export default class Tag extends GlobalSearch{
+    constructor(recipes) {
+        super(recipes)
         this.container = document.querySelector('.tag__container')
         this.cardContainer = document.querySelector("main");
         this.searchTab = ""
@@ -21,28 +24,24 @@ export default class Tag {
     }
 
     removeTag(e, options) {
-       console.log(options)
-        // options.`${this.searchTab}`.delete(e.target.textContent)
-        let searchType
         let tag
         (e.target.classList[0] === "far" ) ? tag = e.target.parentNode : tag = e.target
         console.log(tag.classList[1])
+        options.results = this.recipes
         switch(tag.classList[1]) {
             case 'tag--ingredient' :
-                options.ingredientsTagTab.delete(e.target.textContent)
-                searchType = "ingredient"
+                options.ingredientsTagTab.delete(tag.textContent)
             break
             case 'tag--ustensil' :
-                options.ustensilsTagTab.delete(e.target.textContent)
-                searchType = "ustensil"
+                options.ustensilsTagTab.delete(tag.textContent)
             break
             case 'tag--appliance' :
-                options.apliancesTagTab.delete(e.target.textContent)
-                searchType = "appliance"
+                options.appliancesTagTab.delete(tag.textContent)
             break
         }
+        console.log(options)
         this.container.removeChild(tag)
-        this.matchsRecipes(options, searchType)
+        this.ultimateMatchesRecipes(options)
     }
 
     matchsRecipes(options, searchType, value = options.input) {
@@ -61,8 +60,8 @@ export default class Tag {
             break
             case 'ustensil' : 
                 options.results.forEach((recipe) => {
-                    recipe.ingredients.forEach((item) => { 
-                        if (valueRegex.test(item.ingredient.toLowerCase())) {
+                    recipe.ustensils.forEach((item) => { 
+                        if (valueRegex.test(item.toLowerCase())) {
                             results.push(recipe)
                         }
                     })  
@@ -70,16 +69,12 @@ export default class Tag {
             break
             case 'appliance' :
                 options.results.forEach((recipe) => {
-                    recipe.ingredients.forEach((item) => { 
-                        if (valueRegex.test(item.ingredient.toLowerCase())) {
-                            results.push(recipe)
-                        }
-                    })  
+                    if (valueRegex.test(recipe.appliance.toLowerCase())) {
+                        results.push(recipe)
+                    }
                 })
             break
-
         }
-        
         options.results = results
         this.displayRecipes(options.results)
         return options
