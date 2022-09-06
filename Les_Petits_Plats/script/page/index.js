@@ -13,7 +13,26 @@ const appliancesTagTab = new Set()
 const ustensilsTagTab = new Set()
 const options = { results, input, ingredientsTagTab, appliancesTagTab, ustensilsTagTab }
 
-const globalSearch = new GlobalSearch(recipes)
+const allIngredients = new Set()
+recipes.forEach((recipe)=> {
+    recipe.ingredients.forEach((ingredient) => {
+        allIngredients.add(ingredient.ingredient.toLowerCase())
+    })
+})
+const allAppliances = new Set()
+recipes.forEach((recipe)=> {
+        allAppliances.add(recipe.appliance.toLowerCase())
+})
+
+const allUstensils = new Set()
+recipes.forEach((recipes)=> {
+    recipes.ustensils.forEach((ustensil) => {
+        allUstensils.add(ustensil.toLowerCase())
+    })
+})
+const allSearch = { allIngredients, allAppliances, allUstensils }
+
+const globalSearch = new GlobalSearch(recipes, allSearch)
 globalSearch.ultimateMatchesRecipes(options)
 
 const ingredientsDiv = document.querySelector('.ingredient__tag')
@@ -33,10 +52,12 @@ const displaySearch = (searchsTagTab, searchDiv) => {
         tag.innerHTML = ingredient
         const newTag = searchDiv.appendChild(tag)
        
-        newTag.addEventListener("click", (e) => { 
-            tagFactory(e, options, recipes)
+        newTag.addEventListener("click", (e) => {
+            globalSearch.addSearchListener(e, options)
             displayAdvencedSearchs()
-        })
+        }  )
+            
+    
     })
   
 }

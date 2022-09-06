@@ -1,42 +1,56 @@
+import tagFactory from "../factory/tagFactory.js";
+
 export default class GlobalSearch {
-    constructor(recipes) {
+    constructor(recipes, allSearch) {
         this.recipes = recipes
+        console.log(allSearch)
+        this.allIngredients = allSearch.allIngredients
+        this.allAppliances = allSearch.allAppliances
+        this.allUstensils = allSearch.allUstensils
         this.cardContainer = document.querySelector("main");
     }
+
     filterWithInput(options) {
         const resultsInput = new Set()
-                        const regex = new RegExp(options.input.toLowerCase())
-                        for(let recipe of this.recipes) {
-                            if (regex.test(recipe.name.toLowerCase())
-                            ||recipe.ingredients.forEach((item) => regex.test(item.ingredient.toLowerCase()))
-                            ||regex.test(recipe.description.toLowerCase())) {
-                                resultsInput.add(recipe)
-                            }
-                        }
-                        options.results = resultsInput
+        const regex = new RegExp(options.input.toLowerCase())
+        for(let recipe of this.recipes) {
+            if (regex.test(recipe.name.toLowerCase())
+            ||recipe.ingredients.forEach((item) => regex.test(item.ingredient.toLowerCase()))
+            ||regex.test(recipe.description.toLowerCase())) {
+                resultsInput.add(recipe)
+            }
+        }
+        options.results = resultsInput
     }
 
     filterWithIngredients(data, options) {
-        const resultsIngredient = new Set()
+        let resultsIngredient = new Set()
+        console.log(data)
         for(let tag of options.ingredientsTagTab){
-            
+        
             const regex = new RegExp(tag.toLowerCase())
             data.forEach((recipe) => {
-                recipe.ingredients.forEach((ingredient) => { 
-                        if (!regex.test(ingredient.ingredient.toLowerCase())) {
-                            resultsIngredient.delete(recipe)
-                        }
-                })  
+                console.log(recipe)
+                for(let i=0 ; i< data.length; i++) {
+                    if (regex.test(recipe.ingredients.ingredient.toLowerCase())) {
+                        resultsIngredient.splice(i,1)
+                    }
+
+                }
+                // recipe.ingredients.forEach((ingredient) => { 
+                //         if (regex.test(ingredient.ingredient.toLowerCase())) {
+                //             resultsIngredient.add(recipe)
+                //         }
+                // })  
             })
        
             options.results = resultsIngredient
         }
     }
     filterWithUstensils(data, options) {
-        const resultsUstensil = new Set()
+        const resultsUstensil = this.allUstensils
         for(let tag of options.ustensilsTagTab){
-            // let data
-            // options.results.size === 0 ? data = this.recipes : data = options.results
+            
             const regex = new RegExp(tag.toLowerCase())
             data.forEach((recipe) => {
                 recipe.ustensils.forEach((item) => { 
@@ -49,10 +63,8 @@ export default class GlobalSearch {
         options.results = resultsUstensil
     }
     filterWithAppliances(data, options) {
-        const resultsAppliance = new Set()
+        const resultsAppliance = this.allAppliances
         for(let tag of options.appliancesTagTab){
-        //     let data
-        // options.results.size === 0 ? data = this.recipes : data = options.results
             const regex = new RegExp(tag.toLowerCase())
             data.forEach((recipe) => {
                 if (!regex.test(recipe.appliance.toLowerCase())) {
@@ -63,36 +75,42 @@ export default class GlobalSearch {
         options.results = resultsAppliance
     }
     ultimateMatchesRecipes(options) {
+       let data 
         for(let option in options) {
-            let data = this.recipes
+           
             switch(option) {
                 case 'input' :
                     if(options.input === "") {
-                        options.results = this.recipes
+                        data = this.recipes
+                        options.results = [...this.recipes]
                     } else {
                         this.filterWithInput(options)
-                        data = options.results
+                        data = [...options.results]
                     }
                     
                 break
                 case 'ingredientsTagTab' :
                     if (options.ingredientsTagTab.size > 0) {
                        this.filterWithIngredients(data, options)
+                       data = options.results
                     }
                 break
                 case 'ustensilsTagTab' :
                     if (options.ustensilsTagTab.size > 0) {
                         this.filterWithUstensils(data, options)
+                        data = options.results
                     }
                 break
                 case 'appliancesTagTab' :
                     if (options.appliancesTagTab.size > 0) {
                         this.filterWithAppliances(data, options)
+                        data = options.results
                     }
                 break
             }
             
         }
+        console.log(options)
         this.displayRecipes(options.results)
         return options.results
         
@@ -133,5 +151,39 @@ export default class GlobalSearch {
         const message = document.createElement('p');
         message.textContent = "aucun résultat trouvé"
         this.cardContainer.appendChild(message);
+    }
+    addListenerTag(tag, options) {
+        
+        tag.addEventListener('click', (e) => this.removeTag(e, options))
+        return tag
+    }
+    removeTag(e, options) {
+        const container = document.querySelector('.tag__container')
+        let tag
+        (e.target.classList[0] === "far" ) ? tag = e.target.parentNode : tag = e.target
+        console.log(tag.classList[1])
+        options.results = this.recipes
+        switch(tag.classList[1]) {
+            case 'tag--ingredient' :
+                options.ingredientsTagTab.delete(tag.textContent)
+            break
+            case 'tag--ustensil' :
+                options.ustensilsTagTab.delete(tag.textContent)
+            break
+            case 'tag--appliance' :
+                options.appliancesTagTab.delete(tag.textContent)
+            break
+        }
+        console.log(options)
+        container.removeChild(tag)
+        this.ultimateMatchesRecipes(options)
+    }
+    addSearchListener(e, options) {
+        const object = tagFactory(e)
+        const tag = object.displayTag(e, options)
+        this.ultimateMatchesRecipes(options)
+        this.addListenerTag(tag, options)
+        
+            
     }
 }
