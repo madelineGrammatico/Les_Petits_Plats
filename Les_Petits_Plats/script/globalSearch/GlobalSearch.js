@@ -1,16 +1,10 @@
 export default class GlobalSearch {
     constructor(recipes) {
         this.recipes = recipes
+        this.cardContainer = document.querySelector("main");
     }
-    ultimateMatchesRecipes(options) {
-       console.log(options)
-        for(let option in options) {
-            
-            switch(option) {
-                case 'input' :
-                    if(options.input !== "") {
-                        
-                        const resultsInput = new Set()
+    filterWithInput(options) {
+        const resultsInput = new Set()
                         const regex = new RegExp(options.input.toLowerCase())
                         for(let recipe of this.recipes) {
                             if (regex.test(recipe.name.toLowerCase())
@@ -20,67 +14,85 @@ export default class GlobalSearch {
                             }
                         }
                         options.results = resultsInput
+    }
+
+    filterWithIngredients(data, options) {
+        const resultsIngredient = new Set()
+        for(let tag of options.ingredientsTagTab){
+            
+            const regex = new RegExp(tag.toLowerCase())
+            data.forEach((recipe) => {
+                recipe.ingredients.forEach((ingredient) => { 
+                        if (!regex.test(ingredient.ingredient.toLowerCase())) {
+                            resultsIngredient.delete(recipe)
+                        }
+                })  
+            })
+       
+            options.results = resultsIngredient
+        }
+    }
+    filterWithUstensils(data, options) {
+        const resultsUstensil = new Set()
+        for(let tag of options.ustensilsTagTab){
+            // let data
+            // options.results.size === 0 ? data = this.recipes : data = options.results
+            const regex = new RegExp(tag.toLowerCase())
+            data.forEach((recipe) => {
+                recipe.ustensils.forEach((item) => { 
+                    if (!regex.test(item.toLowerCase())) {
+                        resultsUstensil.delete(recipe)
                     }
+                })  
+            })
+        }
+        options.results = resultsUstensil
+    }
+    filterWithAppliances(data, options) {
+        const resultsAppliance = new Set()
+        for(let tag of options.appliancesTagTab){
+        //     let data
+        // options.results.size === 0 ? data = this.recipes : data = options.results
+            const regex = new RegExp(tag.toLowerCase())
+            data.forEach((recipe) => {
+                if (!regex.test(recipe.appliance.toLowerCase())) {
+                    resultsAppliance.delete(recipe)
+                }
+            })
+        }
+        options.results = resultsAppliance
+    }
+    ultimateMatchesRecipes(options) {
+        for(let option in options) {
+            let data = this.recipes
+            switch(option) {
+                case 'input' :
+                    if(options.input === "") {
+                        options.results = this.recipes
+                    } else {
+                        this.filterWithInput(options)
+                        data = options.results
+                    }
+                    
                 break
                 case 'ingredientsTagTab' :
                     if (options.ingredientsTagTab.size > 0) {
-                        const resultsIngredient = new Set()
-                        for(let tag of options.ingredientsTagTab){
-                            let data
-                            options.results.size == 0 ? data = this.recipes : data = options.results
-                            const regex = new RegExp(tag.toLowerCase())
-                            data.forEach((recipe) => {
-                                recipe.ingredients.forEach((ingredient) => { 
-                                        if (regex.test(ingredient.ingredient.toLowerCase())) {
-                                            resultsIngredient.add(recipe)
-                                        }
-                                })  
-                            })
-                       
-                            options.results = resultsIngredient
-                        }
-                        
+                       this.filterWithIngredients(data, options)
                     }
                 break
                 case 'ustensilsTagTab' :
                     if (options.ustensilsTagTab.size > 0) {
-                        const resultsUstensil = new Set()
-                        for(let tag of options.ustensilsTagTab){
-                            let data
-                            options.results.size === 0 ? data = this.recipes : data = options.results
-                            const regex = new RegExp(tag.toLowerCase())
-                            data.forEach((recipe) => {
-                                recipe.ustensils.forEach((item) => { 
-                                    if (regex.test(item.toLowerCase())) {
-                                        resultsUstensil.add(recipe)
-                                    }
-                                })  
-                            })
-                        }
-                        options.results = resultsUstensil
+                        this.filterWithUstensils(data, options)
                     }
                 break
                 case 'appliancesTagTab' :
                     if (options.appliancesTagTab.size > 0) {
-                        console.log('applianceTagTab')
-                        const resultsAppliance = new Set()
-                        for(let tag of options.appliancesTagTab){
-                            let data
-                        options.results.size === 0 ? data = this.recipes : data = options.results
-                            const regex = new RegExp(tag.toLowerCase())
-                            data.forEach((recipe) => {
-                                if (regex.test(recipe.appliance.toLowerCase())) {
-                                    resultsAppliance.push(recipe)
-                                }
-                            })
-                        }
-                        options.results = resultsAppliance
+                        this.filterWithAppliances(data, options)
                     }
                 break
             }
             
         }
-        
         this.displayRecipes(options.results)
         return options.results
         
@@ -90,7 +102,7 @@ export default class GlobalSearch {
     }
 
     displayRecipes(results) {
-        this.clearContainer()
+        
         this.cardContainer.innerHTML = "";
         results.forEach((recipe) => {
             const card = document.createElement('article');
@@ -115,5 +127,11 @@ export default class GlobalSearch {
                 divContainer.appendChild(containerIngredients)
             })
         })
+    }
+    displaysNoResult() {
+        this.cardContainer.innerHTML = "";
+        const message = document.createElement('p');
+        message.textContent = "aucun résultat trouvé"
+        this.cardContainer.appendChild(message);
     }
 }

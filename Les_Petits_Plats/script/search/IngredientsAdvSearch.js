@@ -1,39 +1,40 @@
-import AvencedSearch from "./AvencedSeach.js";
-import tagFactory from "../factory/tagFactory.js";
+// import AvencedSearch from "./AvencedSeach.js";
+// import tagFactory from "../factory/tagFactory.js";
 
-export default class IngredientsAdvSearch extends AvencedSearch{
-    constructor (results) {
-        super(results)
-        this.searchDiv = document.querySelector('.ingredient__tag')
+export default class IngredientsAdvSearch {
+    constructor () {
+        
     }
 
-    addSearchIngredients() { 
-        this.results.forEach((recipes) => {
+    addSearchIngredients(options) { 
+        const searchsTagTab = new Set()
+        options.results.forEach((recipes) => {
             recipes.ingredients.forEach((ingredient) => {
-                this.searchsTagTab.add(ingredient.ingredient.toLowerCase())
+                searchsTagTab.add(ingredient.ingredient.toLowerCase())
             })
         })
-        return this
+        return searchsTagTab
+        
     }
 
    
 
-    displaySearch(options, recipes) {
+    // displaySearch(options, recipes) {
        
-        this.searchDiv.innerHTML = ""
-        this.searchsTagTab.forEach((ingredient)=> {
-            let tag = document.createElement("span")
-            tag.classList.add("searchTag")
-            tag.innerHTML = ingredient
-            const newTag = this.searchDiv.appendChild(tag)
+    //     this.searchDiv.innerHTML = ""
+    //     this.searchsTagTab.forEach((ingredient)=> {
+    //         let tag = document.createElement("span")
+    //         tag.classList.add("searchTag")
+    //         tag.innerHTML = ingredient
+    //         const newTag = this.searchDiv.appendChild(tag)
            
-            newTag.addEventListener("click", (e) => { 
-                tagFactory(e, options, recipes)
-            })
+    //         newTag.addEventListener("click", (e) => { 
+    //             tagFactory(e, options, recipes)
+    //         })
             
            
-        })
+    //     })
       
-    }
+    // }
     
 }

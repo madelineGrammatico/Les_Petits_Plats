@@ -10,11 +10,11 @@ export default function tagFactory(e, options, recipes) {
             return options
             
         case 'appliance__tag': 
-            const applianceTag = new ApplianceTag(e, options)
+            const applianceTag = new ApplianceTag(recipes)
             options = applianceTag.displayTag(e, options)
             return options
         case 'ustensil__tag' :
-            const ustensilTag = new UstensilTag(e, options)
+            const ustensilTag = new UstensilTag(recipes)
             options = ustensilTag.displayTag(e, options)
             return options
     }

@@ -1,33 +1,19 @@
-import AvencedSearch from "./AvencedSeach.js";
-import tagFactory from "../factory/tagFactory.js";
+// import AvencedSearch from "./AvencedSeach.js";
+// import tagFactory from "../factory/tagFactory.js";
 
-export default class UstensilsAdvSearch extends AvencedSearch{
-    constructor (results) {
-        super(results)
-        this.searchDiv = document.querySelector('.ustensil__tag')
+export default class UstensilsAdvSearch {
+    constructor () {
+      
     }
-    addSearchUstensils() {
-        this.results.forEach((recipe) => {
+    addSearchUstensils(options) {
+        const searchsTagTab = new Set()
+        options.results.forEach((recipe) => {
             recipe.ustensils.forEach((ustensil) => {
-                this.searchsTagTab.add(ustensil.toLowerCase())
+                searchsTagTab.add(ustensil.toLowerCase())
             })
         })
-        return this
+        return searchsTagTab
     }
   
-    displaySearch(options) {
-        this.searchDiv.innerHTML = ""
-        this.searchsTagTab.forEach((ustensil)=> {
-            let tag = document.createElement("span")
-            tag.classList.add("searchTag")
-            tag.innerHTML = ustensil
-            const newTag = this.searchDiv.appendChild(tag)
-
-            newTag.addEventListener("click", (e) => { 
-                tagFactory(e, options, this.recipes)
-            })
-        })
-
-    }
     
 }

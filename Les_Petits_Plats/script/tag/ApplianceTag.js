@@ -8,7 +8,7 @@ export default class ApplianceTag extends Tag {
     }
     displayTag(e, options){
         const value = e.target.textContent
-        options.ingredientsTagTab.add(value)
+        options.appliancesTagTab.add(value)
         const tag = this.createTag(value, options)
         tag.classList.add('tag--appliance')
         let search = e.target
