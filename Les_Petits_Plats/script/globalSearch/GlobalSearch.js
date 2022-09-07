@@ -1,12 +1,8 @@
 import tagFactory from "../factory/tagFactory.js";
 
 export default class GlobalSearch {
-    constructor(recipes, allSearch) {
+    constructor(recipes) {
         this.recipes = recipes
-        console.log(allSearch)
-        this.allIngredients = allSearch.allIngredients
-        this.allAppliances = allSearch.allAppliances
-        this.allUstensils = allSearch.allUstensils
         this.cardContainer = document.querySelector("main");
     }
 
@@ -24,87 +20,109 @@ export default class GlobalSearch {
     }
 
     filterWithIngredients(data, options) {
-        let resultsIngredient = new Set()
-        console.log(data)
-        for(let tag of options.ingredientsTagTab){
-        
-            const regex = new RegExp(tag.toLowerCase())
-            data.forEach((recipe) => {
-                console.log(recipe)
-                for(let i=0 ; i< data.length; i++) {
-                    if (regex.test(recipe.ingredients.ingredient.toLowerCase())) {
-                        resultsIngredient.splice(i,1)
+        for(let recipe of data) {
+            let isValid = false
+            for(let tag of options.ingredientsTagTab){
+                let isTagValid = false
+                let i = 0
+                for (i ; i < recipe.ingredients.length; i++) {
+                    const regex = new RegExp(tag.toLowerCase())
+                    if (regex.test(recipe.ingredients[i].ingredient.toLowerCase())) {
+                        isTagValid = true
                     }
-
                 }
-                // recipe.ingredients.forEach((ingredient) => { 
-                //         if (regex.test(ingredient.ingredient.toLowerCase())) {
-                //             resultsIngredient.add(recipe)
-                //         }
-                // })  
-            })
-       
-            options.results = resultsIngredient
+                if (isTagValid) { isValid = true } 
+                else { 
+                    isValid = false
+                    break
+                }
+            }
+            if (isValid === false) { data.delete(recipe) } 
         }
+        options.results = data
     }
     filterWithUstensils(data, options) {
-        const resultsUstensil = this.allUstensils
-        for(let tag of options.ustensilsTagTab){
-            
-            const regex = new RegExp(tag.toLowerCase())
-            data.forEach((recipe) => {
-                recipe.ustensils.forEach((item) => { 
-                    if (!regex.test(item.toLowerCase())) {
-                        resultsUstensil.delete(recipe)
+        for(let recipe of data) {
+            let isValid = false
+            for(let tag of options.ustensilsTagTab){
+                let isTagValid = false
+                let i= 0
+                for(i; i < recipe.ustensils.length; i++){
+                    const regex = new RegExp(tag.toLowerCase())
+                    if (regex.test(recipe.ustensils[i].toLowerCase())) {
+                        isTagValid = true
                     }
-                })  
-            })
+                }
+                if (isTagValid) {isValid = true}
+                else { 
+                    isValid = false
+                    break
+                }
+            }
+            if (isValid === false) {data.delete(recipe)}
+            
         }
-        options.results = resultsUstensil
+        options.results = data
     }
     filterWithAppliances(data, options) {
-        const resultsAppliance = this.allAppliances
-        for(let tag of options.appliancesTagTab){
-            const regex = new RegExp(tag.toLowerCase())
-            data.forEach((recipe) => {
-                if (!regex.test(recipe.appliance.toLowerCase())) {
-                    resultsAppliance.delete(recipe)
+        for(let recipe of data) {
+            let isValid = false
+            for(let tag of options.appliancesTagTab){
+                let isTagValid
+                const regex = new RegExp(tag.toLowerCase())
+                if (regex.test(recipe.appliance.toLowerCase())) {
+                    isTagValid = true
                 }
-            })
+                if(isTagValid) isValid = true
+                else {
+                    isValid = false
+                    break
+                }
+            }
+            if (isValid === false) {data.delete(recipe)}
         }
-        options.results = resultsAppliance
+        options.results = data
     }
+        
+    
     ultimateMatchesRecipes(options) {
-       let data 
+       let data = new Set()
         for(let option in options) {
-           
             switch(option) {
                 case 'input' :
                     if(options.input === "") {
-                        data = this.recipes
+                        for(let result of this.recipes) {
+                            data.add(result)
+                        }
                         options.results = [...this.recipes]
                     } else {
                         this.filterWithInput(options)
-                        data = [...options.results]
+                        for(let result of options.results) {
+                            data.add(result)
+                        }
                     }
                     
                 break
                 case 'ingredientsTagTab' :
                     if (options.ingredientsTagTab.size > 0) {
                        this.filterWithIngredients(data, options)
-                       data = options.results
+                       for(let result of options.results) {
+                        data.add(result)
+                    }
                     }
                 break
                 case 'ustensilsTagTab' :
                     if (options.ustensilsTagTab.size > 0) {
                         this.filterWithUstensils(data, options)
-                        data = options.results
+                        for(let result of options.results) {
+                            data.add(result)
+                        }
                     }
                 break
                 case 'appliancesTagTab' :
                     if (options.appliancesTagTab.size > 0) {
                         this.filterWithAppliances(data, options)
-                        data = options.results
+                        
                     }
                 break
             }
@@ -187,3 +205,4 @@ export default class GlobalSearch {
             
     }
 }
+//znimed@gmail.com

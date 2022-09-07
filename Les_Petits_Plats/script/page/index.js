@@ -13,26 +13,7 @@ const appliancesTagTab = new Set()
 const ustensilsTagTab = new Set()
 const options = { results, input, ingredientsTagTab, appliancesTagTab, ustensilsTagTab }
 
-const allIngredients = new Set()
-recipes.forEach((recipe)=> {
-    recipe.ingredients.forEach((ingredient) => {
-        allIngredients.add(ingredient.ingredient.toLowerCase())
-    })
-})
-const allAppliances = new Set()
-recipes.forEach((recipe)=> {
-        allAppliances.add(recipe.appliance.toLowerCase())
-})
-
-const allUstensils = new Set()
-recipes.forEach((recipes)=> {
-    recipes.ustensils.forEach((ustensil) => {
-        allUstensils.add(ustensil.toLowerCase())
-    })
-})
-const allSearch = { allIngredients, allAppliances, allUstensils }
-
-const globalSearch = new GlobalSearch(recipes, allSearch)
+const globalSearch = new GlobalSearch(recipes)
 globalSearch.ultimateMatchesRecipes(options)
 
 const ingredientsDiv = document.querySelector('.ingredient__tag')
@@ -56,10 +37,7 @@ const displaySearch = (searchsTagTab, searchDiv) => {
             globalSearch.addSearchListener(e, options)
             displayAdvencedSearchs()
         }  )
-            
-    
     })
-  
 }
 const displayAdvencedSearchs = () => {
     const ingredientsList = ingredientSearch.addSearchIngredients(options)
@@ -79,11 +57,11 @@ searchRecipe.addEventListener('input', (e) => {
         options.input = e.currentTarget.value
         globalSearch.ultimateMatchesRecipes(options)
         if (options.results.size !== 0) {
-                        displayAdvencedSearchs()
-                    } else {
-                        console.log('no results')
-                        globalSearch.displaysNoResult();
-                    }
+            displayAdvencedSearchs()
+        } else {
+            console.log('no results')
+            globalSearch.displaysNoResult();
+        }
     } else {
         options.input = ""
         globalSearch.ultimateMatchesRecipes(options)
