@@ -1,10 +1,55 @@
 import tagFactory from "../factory/tagFactory.js";
+import IngredientsAdvSearch from "../search/IngredientsAdvSearch.js";
+import AppliancesAdvSearch from "../search/AppliancesAdvSearch.js";
+import UstensilsAdvSearch from "../search/UstensilsAdvSearch.js";
 
 export default class GlobalSearch {
     constructor(recipes) {
         this.recipes = recipes
         this.cardContainer = document.querySelector("main");
+        this.ingredientsDiv = document.querySelector('.ingredient__tag')
+        this.appliancesDiv = document.querySelector('.appliance__tag')
+        this.ustensilsDiv = document.querySelector('.ustensil__tag')
+        this.ingredientSearch = new IngredientsAdvSearch(recipes)
+        this.applianceSearch = new AppliancesAdvSearch(recipes)
+        this.ustensilSearch = new UstensilsAdvSearch(recipes)
     }
+    displaySearch (searchsTagTab, searchDiv, options) {
+        searchDiv.innerHTML = ""
+        searchsTagTab.forEach((ingredient)=> {
+            let tag = document.createElement("span")
+            tag.classList.add("searchTag")
+            tag.innerHTML = ingredient
+            const newTag = searchDiv.appendChild(tag)
+           
+            newTag.addEventListener("click", (e) => {
+                this.addSearchListener(e, options)
+                this.displayAdvencedSearchs(options)
+            }  )
+        })
+    }
+    
+    displayIngredientSearchs(options) {
+        const ingredientsList = this.ingredientSearch.addSearchIngredients(options)
+        this.displaySearch(ingredientsList, this.ingredientsDiv, options)
+    }
+    displayApplianceSearchs(options) {
+        const appliancesList = this.applianceSearch.addSearchAppliances(options)
+        this.displaySearch(appliancesList, this.appliancesDiv, options)
+    }
+    displayUstensilSearchs(options) {
+        const ustensilsList = this.ustensilSearch.addSearchUstensils(options)
+        this.displaySearch(ustensilsList, this.ustensilsDiv, options)
+    }
+    
+    displayAdvencedSearchs(options) {
+        this.displayIngredientSearchs(options)
+        this.displayApplianceSearchs(options)
+        this.displayUstensilSearchs(options)
+    }
+
+    //===================================================================================
+    //===================================================================================
 
     filterWithInput(options) {
         const resultsInput = new Set()
@@ -83,7 +128,6 @@ export default class GlobalSearch {
         }
         options.results = data
     }
-        
     
     ultimateMatchesRecipes(options) {
        let data = new Set()
@@ -128,11 +172,14 @@ export default class GlobalSearch {
             }
             
         }
-        console.log(options)
         this.displayRecipes(options.results)
         return options.results
         
     }
+
+    //===================================================================================
+    //===================================================================================
+    
     #stringifyIngredients(ingredient, quantity = "", unit="") {
         return `${ingredient} : ${quantity} ${unit}`
     }
@@ -170,11 +217,24 @@ export default class GlobalSearch {
         message.textContent = "aucun résultat trouvé"
         this.cardContainer.appendChild(message);
     }
-    addListenerTag(tag, options) {
+
+    //===================================================================================
+    //===================================================================================
+
+    addSearchListener(e, options) {
+        const object = tagFactory(e)
+        const tag = object.displayTag(e, options)
+        this.ultimateMatchesRecipes(options)
+        this.addListenerTag(tag, options)
         
+            
+    }
+
+    addListenerTag(tag, options) {
         tag.addEventListener('click', (e) => this.removeTag(e, options))
         return tag
     }
+
     removeTag(e, options) {
         const container = document.querySelector('.tag__container')
         let tag
@@ -192,17 +252,9 @@ export default class GlobalSearch {
                 options.appliancesTagTab.delete(tag.textContent)
             break
         }
-        console.log(options)
         container.removeChild(tag)
         this.ultimateMatchesRecipes(options)
+        this.displayAdvencedSearchs(options)
     }
-    addSearchListener(e, options) {
-        const object = tagFactory(e)
-        const tag = object.displayTag(e, options)
-        this.ultimateMatchesRecipes(options)
-        this.addListenerTag(tag, options)
-        
-            
-    }
+
 }
-//znimed@gmail.com
