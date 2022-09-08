@@ -1,17 +1,16 @@
 import recipes from "../../recipes.js";
-
 import GlobalSearch from "../globalSearch/GlobalSearch.js";
 
-const results = new Set()
+
 let input = ""
+const results = new Set()
 const ingredientsTagTab = new Set()
 const appliancesTagTab = new Set()
 const ustensilsTagTab = new Set()
 const options = { results, input, ingredientsTagTab, appliancesTagTab, ustensilsTagTab }
-
 const globalSearch = new GlobalSearch(recipes)
-globalSearch.ultimateMatchesRecipes(options)
 
+globalSearch.ultimateMatchesRecipes(options)
 globalSearch.displayAdvencedSearchs(options)
 
 const searchRecipe = document.querySelector('.search__recipe');
@@ -46,11 +45,9 @@ for (let searchInput of advencedSearchInput) {
                 globalSearch.displayUstensilSearchs(options)
             break
         }
-        const targetParent = e.target.parentNode
-        const containerSearchs = targetParent.querySelector('.search__tag')
+        const containerSearchs = e.target.parentNode.querySelector('.search__tag')
         const searchsTab = e.target.parentNode.querySelectorAll('.searchTag')
-        input = e.target.value.toLowerCase()
-        const inputRegex = new RegExp(input)
+        const inputRegex = new RegExp(e.target.value.toLowerCase())
         for (let search of searchsTab) {
             if (!inputRegex.test(search.textContent.toLowerCase())) {
                 containerSearchs.removeChild(search)

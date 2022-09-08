@@ -1,11 +1,11 @@
 export default class IngredientsAdvSearch {
     addSearchIngredients(options) { 
         const searchsTagTab = new Set()
-        options.results.forEach((recipes) => {
+        for(let recipes of options.results) {
             recipes.ingredients.forEach((ingredient) => {
                 searchsTagTab.add(ingredient.ingredient.toLowerCase())
             })
-        })
+        }
 
         return searchsTagTab
     }

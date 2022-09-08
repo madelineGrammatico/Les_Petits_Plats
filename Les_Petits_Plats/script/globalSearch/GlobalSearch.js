@@ -16,7 +16,7 @@ export default class GlobalSearch {
     }
     displaySearch (searchsTagTab, searchDiv, options) {
         searchDiv.innerHTML = ""
-        searchsTagTab.forEach((ingredient)=> {
+        for(let ingredient of searchsTagTab){
             let tag = document.createElement("span")
             tag.classList.add("searchTag")
             tag.innerHTML = ingredient
@@ -26,7 +26,7 @@ export default class GlobalSearch {
                 this.addSearchListener(e, options)
                 this.displayAdvencedSearchs(options)
             }  )
-        })
+        }
     }
     
     displayIngredientSearchs(options) {
@@ -70,7 +70,7 @@ export default class GlobalSearch {
             for(let tag of options.ingredientsTagTab){
                 let isTagValid = false
                 let i = 0
-                for (i ; i < recipe.ingredients.length; i++) {
+                for(i ; i < recipe.ingredients.length; i++) {
                     const regex = new RegExp(tag.toLowerCase())
                     if (regex.test(recipe.ingredients[i].ingredient.toLowerCase())) {
                         isTagValid = true
@@ -105,7 +105,6 @@ export default class GlobalSearch {
                 }
             }
             if (isValid === false) {data.delete(recipe)}
-            
         }
         options.results = data
     }
@@ -185,9 +184,8 @@ export default class GlobalSearch {
     }
 
     displayRecipes(results) {
-        
         this.cardContainer.innerHTML = "";
-        results.forEach((recipe) => {
+        for(let recipe of results) {
             const card = document.createElement('article');
             card.classList.add('card__Recipes');
             card.innerHTML = `<a href="">
@@ -202,14 +200,14 @@ export default class GlobalSearch {
             this.cardContainer.appendChild(card);
             const divContainer = card.querySelector(".card__ingredients")
             
-            recipe.ingredients.forEach((object) => {
+            for(let object of recipe.ingredients) {
                 const inner = this.#stringifyIngredients(object.ingredient, object.quantity, object.unit)
                 const containerIngredients = document.createElement('span')
                 containerIngredients.classList.add("ingedient__span")
                 containerIngredients.innerHTML = inner
                 divContainer.appendChild(containerIngredients)
-            })
-        })
+            }
+        }
     }
     displaysNoResult() {
         this.cardContainer.innerHTML = "";
@@ -226,8 +224,6 @@ export default class GlobalSearch {
         const tag = object.displayTag(e, options)
         this.ultimateMatchesRecipes(options)
         this.addListenerTag(tag, options)
-        
-            
     }
 
     addListenerTag(tag, options) {
@@ -239,7 +235,6 @@ export default class GlobalSearch {
         const container = document.querySelector('.tag__container')
         let tag
         (e.target.classList[0] === "far" ) ? tag = e.target.parentNode : tag = e.target
-        console.log(tag.classList[1])
         options.results = this.recipes
         switch(tag.classList[1]) {
             case 'tag--ingredient' :
@@ -256,5 +251,4 @@ export default class GlobalSearch {
         this.ultimateMatchesRecipes(options)
         this.displayAdvencedSearchs(options)
     }
-
 }
