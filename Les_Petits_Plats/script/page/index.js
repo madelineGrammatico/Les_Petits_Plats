@@ -39,14 +39,22 @@ const displaySearch = (searchsTagTab, searchDiv) => {
         }  )
     })
 }
-const displayAdvencedSearchs = () => {
+const displayIngredientSearchs = () => {
     const ingredientsList = ingredientSearch.addSearchIngredients(options)
-    const applianceList = applianceSearch.addSearchAppliances(options)
-    const ustensilsist = ustensilSearch.addSearchUstensils(options)
-
     displaySearch(ingredientsList, ingredientsDiv)
-    displaySearch(applianceList, appliancesDiv)
-    displaySearch(ustensilsist, ustensilsDiv)
+}
+const displayApplianceSearchs =() => {
+    const appliancesList = applianceSearch.addSearchAppliances(options)
+    displaySearch(appliancesList, appliancesDiv)
+}
+const displayUstensilSearchs = () => {
+    const ustensilsList = ustensilSearch.addSearchUstensils(options)
+    displaySearch(ustensilsList, ustensilsDiv)
+}
+const displayAdvencedSearchs = () => {
+    displayIngredientSearchs()
+    displayApplianceSearchs()
+    displayUstensilSearchs()
 }
 
 displayAdvencedSearchs()
@@ -69,6 +77,33 @@ searchRecipe.addEventListener('input', (e) => {
     }
 })
 
+const advencedSearchInput = document.querySelectorAll('.search__input')
+for (let searchInput of advencedSearchInput) {
+    searchInput.addEventListener('input', (e) => {
+        switch(e.target.classList[1]) {
+            case 'input__ingredient':
+                displayIngredientSearchs()
+            break
+            case 'input__appliance':
+                displayApplianceSearchs()
+            break
+            case 'input__ustensil' :
+                // search = ustensilsTagTab
+                displayUstensilSearchs()
+            break
+        }
+        const targetParent = e.target.parentNode
+        const containerSearchs = targetParent.querySelector('.search__tag')
+        const searchsTab = e.target.parentNode.querySelectorAll('.searchTag')
+        input = e.target.value.toLowerCase()
+        const inputRegex = new RegExp(input)
+        for (let search of searchsTab) {
+            if (!inputRegex.test(search.textContent.toLowerCase())) {
+                containerSearchs.removeChild(search)
+            }
+        }
+    })
+}
 //=====================================================
 //=====================================================
 
