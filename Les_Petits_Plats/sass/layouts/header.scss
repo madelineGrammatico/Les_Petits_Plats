@@ -11,22 +11,21 @@ header {
         line-height: 47px;
         text-align: center;
         color: #D04F4F;
-
     }
-
     form {
        width: 100%;
        display: grid;
-       grid-template-rows: 1fr .05fr 1fr;
-       grid-template-columns: auto auto auto;
-
-       .search__recipe {
-            grid-column: 1 /span 3;
-            grid-row: 1;
+       grid-template-rows: 1fr .05fr 90px;
+      
+       .search__container {
+          grid-row: 1;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
        }
 
        .tag__container {
-        grid-column: 1 /span 3;
         grid-row: 2;
         display: flex;
         flex-direction: row;
@@ -57,25 +56,27 @@ header {
        .tag--ustensil {
             background: #ED6454;
        }
+       .advencedSearch__wrap {
+          width: 100%;
+          display: flex;
+          gap: 30px;
+          grid-row: 3;
 
-       .advencedSearch__ingredient__container,
-        .advencedSearch__appliance__container,
-        .advencedSearch__utensils__container {
-          bottom :200px
+       }
+        .advencedSearch__container {
+          bottom :200px;
+            z-index: 1;
         }
         
        .advencedSearch__ingredient__container {
-            grid-column: 1;
             grid-row: 3;
         }
         
         .advencedSearch__appliance__container {
-            grid-column: 2;
             grid-row: 3;
         }
         
         .advencedSearch__utensils__container {
-            grid-column: 3;
             grid-row: 3;
         }
    }   

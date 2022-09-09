@@ -189,10 +189,10 @@ export default class GlobalSearch {
             const card = document.createElement('article');
             card.classList.add('card__Recipes');
             card.innerHTML = `<a href="">
-                                <img src="" alt=""></img>
+                                <img class="card__img" src="" alt=""></img>
                                 <div class="card__data">
                                     <span class="card__title">${recipe.name}</span>
-                                    <span class="card__duration"><i class="far fa-clock"></i> ${recipe.time} min</span>
+                                    <span class="card__duration"><img class="icone i--time" src="./asset/minuteur.svg" ></img> ${recipe.time} min</span>
                                     <div class="card__ingredients"></div>
                                     <span class="card__recipe">${recipe.description}</span>
                                 </div>

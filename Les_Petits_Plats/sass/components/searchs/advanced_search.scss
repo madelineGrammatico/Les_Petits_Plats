@@ -2,11 +2,11 @@
 .search__ingredient,
 .search__appliance,
 .search__ustensil  {
-    position: absolute;
-    display: none;
     grid-template-rows: 1fr auto;
     grid-template-columns: auto auto;
     align-items: center;
+   
+
     .search__tag {
         grid-column: 1 /span 2;
         grid-row: 2 ;
@@ -31,6 +31,7 @@
     margin-bottom: 25px;
     height: 69px;
 }
+
 .btn__appliance {
     background: #68D9A4;
     border-radius: 5px;
@@ -95,6 +96,7 @@
     padding: 24px;
     color: white;
     height: 69px;
+    outline: none;
 
     ::placeholder{
         font-family: 'Lato';
@@ -108,7 +110,6 @@
 }
 
    .search__tag {
-    
     flex-direction: column;
     width: 100%;
     border: none;

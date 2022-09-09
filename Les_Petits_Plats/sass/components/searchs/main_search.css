@@ -1,0 +1,54 @@
+.search__recipe {
+  background: #E7E7E7;
+  border: none;
+  width: 100%;
+}
+
+.search__recipe ::-webkit-input-placeholder {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  opacity: 0.25;
+}
+
+.search__recipe :-ms-input-placeholder {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  opacity: 0.25;
+}
+
+.search__recipe ::-ms-input-placeholder {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  opacity: 0.25;
+}
+
+.search__recipe ::placeholder {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  opacity: 0.25;
+}
+
+.search__container {
+  background: #E7E7E7;
+  border-radius: 5px;
+  border: none;
+  padding: 24px;
+  margin-bottom: 25px;
+}
+/*# sourceMappingURL=main_search.css.map */

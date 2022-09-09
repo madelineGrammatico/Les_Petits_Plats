@@ -12,11 +12,11 @@
         color : black; 
         text-decoration: none;
         font-family: 'Lato';
-        overflow: hidden;
-        text-overflow: ellipsis;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
     }
    
-    img {
+    .card__img {
         background: #C7BEBE;
         border-radius: 5px 5px 0px 0px;
         width: 100%;
@@ -32,7 +32,7 @@
         background-color: #E7E7E7;
         display: grid ;
         grid-template-rows: 1fr 3fr;
-        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-columns: 2fr 0.9fr 1.1fr;
         aspect-ratio: 1/0.52;
         padding: 15px;
     }
@@ -58,6 +58,7 @@
         font-weight: 700;
         font-size: 18px;
         line-height: 22px;
+        text-align: end;
 
         color: #000000;
     }
@@ -71,7 +72,8 @@
         font-weight: 700;
         font-size: 12px;
         line-height: 14px;
-
+        overflow: hidden;
+        text-overflow: ellipsis;
         color: #000000;
     }
     .card__recipe {
@@ -86,6 +88,7 @@
         height: 90%;
 
         color: #000000;
-        
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
