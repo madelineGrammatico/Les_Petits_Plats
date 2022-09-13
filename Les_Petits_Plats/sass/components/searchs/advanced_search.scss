@@ -108,11 +108,29 @@
         opacity: 1;
     }
 }
-
-   .search__tag {
-    flex-direction: column;
+.search__tag__container {
+    // flex-direction: column;
+    width: fit-content;
+    // max-width: 700px;
+    display: none;
+}
+.search__tag {
+    display : grid;
+    // grid-auto-flow: column;
+    grid-template-columns:repeat(4, auto);
+    // grid-template-rows: 1fr;
+    
     width: 100%;
     border: none;
     padding: 24px;
     color: white;
+    gap: 15px;
+    
+
+}
+.searchTag {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

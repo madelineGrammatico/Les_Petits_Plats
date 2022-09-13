@@ -71,10 +71,10 @@ function displaySearchAdvenced(e) {
     e.preventDefault()
     e.stopPropagation()
     const btn = e.currentTarget.querySelector("button")
-    const div = e.currentTarget.querySelector(".search__tag")
+    const div = e.currentTarget.querySelector(".search__tag__container")
     btn.style.display = "none"
     btn.nextElementSibling.style.display = "grid"
-    div.innerHTML != "" ? div.style.display = "flex" : div.style.display = "none"
+    div.innerHTML != "" ? div.style.display = "grid" : div.style.display = "none"
 }
 
 function displayBtnSearchAdvenced(e) {
