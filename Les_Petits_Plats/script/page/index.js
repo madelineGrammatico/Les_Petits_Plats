@@ -7,14 +7,16 @@ const ingredientsTagTab = new Set()
 const appliancesTagTab = new Set()
 const ustensilsTagTab = new Set()
 const options = { results, input, ingredientsTagTab, appliancesTagTab, ustensilsTagTab}
-const globalSearchOject = globalSearch(recipes)
-globalSearchOject.displayRecipes(recipes)
+const globalSearchObject = globalSearch(recipes)
+
+globalSearchObject.matchesRecipes(options)
+globalSearchObject.displayAdvencedSearchs(options)
 
 const searchRecipe = document.querySelector('.search__recipe')
 searchRecipe.addEventListener('input', (e) => {
     if (e.currentTarget.value.length >= 3) {
         options.input = e.currentTarget.value
-        globalSearchOject.matchesRecipes(options)
+        globalSearchObject.matchesRecipes(options)
     }
 })
 console.log(recipes)
@@ -61,7 +63,8 @@ console.log(recipes)
 //     if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length < 3) {
 //         displayCard(recipes);
 //     } else if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length >= 3) {
-//         result = recipes.filter(recipe => recipe.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1
+//         result = recipes.filter(recipe => 
+//             recipe.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1
 //             || recipe.ingredients.map((item) => {return item.ingredient}).join(" ").toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1
 //             || recipe.description.toLowerCase().indexOf(e.currentTarget.value.toLowerCase())!== -1
 //         )

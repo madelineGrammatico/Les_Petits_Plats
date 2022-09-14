@@ -13,23 +13,45 @@
 </head>
 <body>
     <header>
-        <i class="fas fa-hat-cowboy"></i>
+        <img src="./asset/toque.svg" alt="icone les petis plats"></img>
         <h1>Les petits plats</h1>
         
         <form>
-            <input type="search" class="search__recipe" placeholder="Rechercher une recette"><i></i></input>
-
-            <input type="search" class="search__ingredient" placeholder="Ingrédients"><i class="fas fa-chevron-down"></i></input>
-            <input type="search" class="search__appliance" placeholder="Appareils"><i class="fas fa-chevron-down"></i></input>
-            <input type="search" class="search__utensils" placeholder="Ustensiles"><i class="fas fa-chevron-down"></i></input>
+            <div class= "search__container">
+                <input type="search" class="search__recipe" placeholder="Rechercher une recette">
+                <img src="./asset/loupe.svg" ></img>
+            </div>
+            
+            </input>
+            <div class="tag__container"></div>
+            <div class="advencedSearch__wrap">
+                <div class="advencedSearch__container advencedSearch__ingredient__container">
+                    <button class="searchAdvenced btn__ingredient">Ingredients <i class="fas fa-chevron-down"></i></button>
+                    <div class="search__ingredient search__tag__container">
+                        <input type="search" class="search__input input__ingredient" placeholder="Rechercher un ingredient"><i class="fas fa-chevron-up"></i></input>
+                        <div class="ingredient__tag search__tag"></div>
+                    </div>
+                </div>
+                <div class="advencedSearch__container advencedSearch__appliance__container">
+                    <button class="searchAdvenced btn__appliance">Appareils <i class="fas fa-chevron-down"></i></button>
+                    <div class="search__appliance search__tag__container" >
+                        <input type="search" class="search__input input__appliance" placeholder="Rechercher un appareil"><i class="fas fa-chevron-up"></i></input>
+                        <div class="appliance__tag search__tag"></div>
+                    </div>
+                </div>
+                <div class="advencedSearch__container advencedSearch__utensils__container">
+                    <button class="searchAdvenced btn__ustensil">Ustensils <i class="fas fa-chevron-down"></i></button>
+                    <div class="search__ustensil search__tag__container">
+                        <input type="search" class="search__input input__ustensil" placeholder="Rechercher un ustensile"><i class="fas fa-chevron-up"></i></input>
+                        <div class="ustensil__tag search__tag"></div>
+                    </div>
+                </div>
+            </div>
+            
         </form>
     </header>
     <main>
-        
-    
     </main>
-    
-    <!-- <script src="./recipes.js"></script> -->
     <script type="module" src="./script/page/index.js"></script>
 </body>
 

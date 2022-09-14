@@ -1,11 +1,52 @@
+// import tagFactory from "../factory/tagFactory.js";
+// import AppliancesAdvSearch from "../search/AppliancesAdvSearch.js";
+// import UstensilsAdvSearch from "../search/UstensilsAdvSearch.js";
+import ingredientsAdvSearch from "../advencedSearch/ingredientsAdvSearch.js";
+
 export default function globalSearch(recipes) {
-    // constructor() {
-    //     matchesRecipes = this.matchesRecipes.bind(this)
-    // }
+ 
     const cardContainer = document.querySelector('main')
-    const ingredientsDiv = document.querySelector('.ingrédient__tag')
+    const ingredientsDiv = document.querySelector('.ingredient__tag')
     const appliancesDiv = document.querySelector('.appliance__tag')
     const ustensilsDiv = document.querySelector('.ustensil__tag')
+    const ingredientsSearch = new ingredientsAdvSearch
+
+
+    function displaySearch (searchsTagTab, searchDiv, options) {
+        searchDiv.innerHTML = ""
+        for(let ingredient of searchsTagTab){
+            let tag = document.createElement("span")
+            tag.classList.add("searchTag")
+            tag.innerHTML = ingredient
+            const newTag = searchDiv.appendChild(tag)
+           
+            newTag.addEventListener("click", (e) => {
+                addSearchListener(e, options)
+                displayAdvencedSearchs(options)
+            }  )
+        }
+    }
+    
+    function displayIngredientSearchs(options) {
+        const ingredientsList = ingredientsSearch.addSearchIngredients(options)
+        displaySearch(ingredientsList, ingredientsDiv, options)
+    }
+    function displayApplianceSearchs(options) {
+        const appliancesList = applianceSearch.addSearchAppliances(options)
+        displaySearch(appliancesList, appliancesDiv, options)
+    }
+    function displayUstensilSearchs(options) {
+        const ustensilsList = ustensilSearch.addSearchUstensils(options)
+        displaySearch(ustensilsList, ustensilsDiv, options)
+    }
+    
+    function displayAdvencedSearchs(options) {
+        displayIngredientSearchs(options)
+        // displayApplianceSearchs(options)
+        // displayUstensilSearchs(options)
+    }
+
+
 
     function filterWithInput(options) {
         const regex = new RegExp(options.input.toLowerCase())
@@ -84,15 +125,14 @@ export default function globalSearch(recipes) {
 
     function matchesRecipes(options) {
         let data = new Set()
-        console.log('hey')
         for(let option in options) {
             switch(option) {
                 case 'input' :
                     if(options.input === "") {
-                        for(let result of this.recipes) {
+                        for(let result of recipes) {
                             data.add(result)
                         }
-                        options.results = [...this.recipes]
+                        options.results = [...recipes]
                     } else {
                         filterWithInput(options)
                         for(let result of options.results) {
@@ -150,17 +190,57 @@ export default function globalSearch(recipes) {
                             </a>`;
             cardContainer.appendChild(card);
             const divContainer = card.querySelector(".card__ingredients")
-            
-            for(let object of recipe.ingredients) {
+            recipe.ingredients.forEach((object) => {
                 const inner = stringifyIngredients(object.ingredient, object.quantity, object.unit)
                 const containerIngredients = document.createElement('span')
                 containerIngredients.classList.add("ingedient__span")
                 containerIngredients.innerHTML = inner
                 divContainer.appendChild(containerIngredients)
-            }
+            })
         }
+       
     }
+
+    //------------------------------------------------------------------
+    //------------------------------------------------------------------
+    //------------------------------------------------------------------
+
+    function addSearchListener(e, options) {
+        // const object = tagFactory(e)
+        // const tag = object.displayTag(e, options)
+        // matchesRecipes(options)
+        // addListenerTag(tag, options)
+    }
+
+    function addListenerTag(tag, options) {
+        tag.addEventListener('click', (e) => removeTag(e, options))
+        return tag
+    }
+
+    function removeTag(e, options) {
+        const container = document.querySelector('.tag__container')
+        let tag
+        (e.target.classList[0] === "far" ) ? tag = e.target.parentNode : tag = e.target
+        options.results = recipes
+        switch(tag.classList[1]) {
+            case 'tag--ingredient' :
+                options.ingredientsTagTab.delete(tag.textContent)
+            break
+            case 'tag--ustensil' :
+                options.ustensilsTagTab.delete(tag.textContent)
+            break
+            case 'tag--appliance' :
+                options.appliancesTagTab.delete(tag.textContent)
+            break
+        }
+        container.removeChild(tag)
+        matchesRecipes(options)
+        displayAdvencedSearchs(options)
+    }
+
     return {
-        matchesRecipes, displayRecipes
+        matchesRecipes, 
+        displayRecipes,
+        displayAdvencedSearchs
     }
 }
