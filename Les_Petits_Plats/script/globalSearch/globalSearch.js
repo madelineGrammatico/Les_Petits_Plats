@@ -1,4 +1,4 @@
-import tagFactory from "../factory/tagFactory.js";
+import createNewTag from "../factory/tagFactory.js";
 
 import appliancesAdvSearch from "../advencedSearch/appliancesAdvSearch.js";
 import ingredientsAdvSearch from "../advencedSearch/ingredientsAdvSearch.js";
@@ -220,7 +220,7 @@ export default function globalSearch(recipes) {
     //------------------------------------------------------------------
 
     function addSearchListener(e, options) {
-        const object = tagFactory(e)
+        const object = createNewTag(e,options)
         const tag = object.displayTag(e, options)
         matchesRecipes(options)
         addListenerTag(tag, options)
@@ -228,14 +228,12 @@ export default function globalSearch(recipes) {
  
     function addListenerTag(tag, options) {
         tag.addEventListener('click', (e) => removeTag(e, options))
-        return tag
     }
 
     function removeTag(e, options) {
         const container = document.querySelector('.tag__container')
         let tag
         (e.target.classList[0] === "far" ) ? tag = e.target.parentNode : tag = e.target
-        options.results = recipes
         options.results = new Set()
         recipes.map((recipe) => options.results.add(recipe))
         switch(tag.classList[1]) {
