@@ -1,30 +1,31 @@
-// import tagFactory from "../factory/tagFactory.js";
-// import AppliancesAdvSearch from "../search/AppliancesAdvSearch.js";
-// import UstensilsAdvSearch from "../search/UstensilsAdvSearch.js";
+import tagFactory from "../factory/tagFactory.js";
+
+import appliancesAdvSearch from "../advencedSearch/appliancesAdvSearch.js";
 import ingredientsAdvSearch from "../advencedSearch/ingredientsAdvSearch.js";
+import ustensilsAdvSearch from "../advencedSearch/ustensilsAdvSearch.js";
 
 export default function globalSearch(recipes) {
- 
     const cardContainer = document.querySelector('main')
     const ingredientsDiv = document.querySelector('.ingredient__tag')
     const appliancesDiv = document.querySelector('.appliance__tag')
     const ustensilsDiv = document.querySelector('.ustensil__tag')
     const ingredientsSearch = new ingredientsAdvSearch
+    const appliancesSearch  = new appliancesAdvSearch
+    const ustensilsSearch  = new ustensilsAdvSearch
 
 
     function displaySearch (searchsTagTab, searchDiv, options) {
         searchDiv.innerHTML = ""
-        for(let ingredient of searchsTagTab){
+        searchsTagTab.forEach((search) => {
             let tag = document.createElement("span")
             tag.classList.add("searchTag")
-            tag.innerHTML = ingredient
+            tag.innerHTML = search
             const newTag = searchDiv.appendChild(tag)
-           
             newTag.addEventListener("click", (e) => {
                 addSearchListener(e, options)
                 displayAdvencedSearchs(options)
             }  )
-        }
+        })
     }
     
     function displayIngredientSearchs(options) {
@@ -32,18 +33,18 @@ export default function globalSearch(recipes) {
         displaySearch(ingredientsList, ingredientsDiv, options)
     }
     function displayApplianceSearchs(options) {
-        const appliancesList = applianceSearch.addSearchAppliances(options)
+        const appliancesList = appliancesSearch.addSearchAppliances(options)
         displaySearch(appliancesList, appliancesDiv, options)
     }
     function displayUstensilSearchs(options) {
-        const ustensilsList = ustensilSearch.addSearchUstensils(options)
+        const ustensilsList = ustensilsSearch.addSearchUstensils(options)
         displaySearch(ustensilsList, ustensilsDiv, options)
     }
     
     function displayAdvencedSearchs(options) {
         displayIngredientSearchs(options)
-        // displayApplianceSearchs(options)
-        // displayUstensilSearchs(options)
+        displayApplianceSearchs(options)
+        displayUstensilSearchs(options)
     }
 
 
@@ -60,51 +61,62 @@ export default function globalSearch(recipes) {
     }
 
     function filterWithIngredients(data, options) {
-        for(let recipe of data) {
+        Array.from(data).filter((recipe) => {
             let isValid = false
-            for(let tag of options.ingredientsTagTab){
+                for(let tag of options.ingredientsTagTab){
                 let isTagValid = false
                 let i = 0
-                for(i ; i < recipe.ingredients.length; i++) {
+                recipe.ingredients.map(() => {
                     const regex = new RegExp(tag.toLowerCase())
                     if (regex.test(recipe.ingredients[i].ingredient.toLowerCase())) {
                         isTagValid = true
                     }
-                }
-                if (isTagValid) { isValid = true } 
+                    i++
+                })
+                if (isTagValid) { 
+                    isValid = true
+            
+                } 
                 else { 
                     isValid = false
                     break
                 }
             }
-            if (isValid === false) { data.delete(recipe) } 
-        }
+            if (isValid === false) { 
+                data.delete(recipe) 
+                return false
+            } else {return true}
+        })
         options.results = data
     }
     function filterWithUstensils(data, options) {
-        for(let recipe of data) {
+        Array.from(data).filter((recipe) => {
             let isValid = false
             for(let tag of options.ustensilsTagTab){
                 let isTagValid = false
                 let i= 0
-                for(i; i < recipe.ustensils.length; i++){
+                recipe.ustensils.map(() => {
                     const regex = new RegExp(tag.toLowerCase())
                     if (regex.test(recipe.ustensils[i].toLowerCase())) {
                         isTagValid = true
                     }
-                }
+                    i++
+                })
                 if (isTagValid) {isValid = true}
                 else { 
                     isValid = false
                     break
                 }
             }
-            if (isValid === false) {data.delete(recipe)}
-        }
+            if (isValid === false) { 
+                data.delete(recipe) 
+                return false
+            } else {return true}
+        })
         options.results = data
     }
     function filterWithAppliances(data, options) {
-        for(let recipe of data) {
+        Array.from(data).filter((recipe) => {
             let isValid = false
             for(let tag of options.appliancesTagTab){
                 let isTagValid
@@ -118,49 +130,46 @@ export default function globalSearch(recipes) {
                     break
                 }
             }
-            if (isValid === false) {data.delete(recipe)}
-        }
+            if (isValid === false) { 
+                data.delete(recipe) 
+                return false
+            } else {return true}
+        })
         options.results = data
     }
 
     function matchesRecipes(options) {
         let data = new Set()
+        console.log(options)
         for(let option in options) {
+            
             switch(option) {
                 case 'input' :
                     if(options.input === "") {
-                        for(let result of recipes) {
-                            data.add(result)
-                        }
-                        options.results = [...recipes]
+                        recipes.map((recipe) => data.add(recipe))
+                        recipes.map((recipe) => options.results.add(recipe))
                     } else {
                         filterWithInput(options)
-                        for(let result of options.results) {
-                            data.add(result)
-                        }
+                        options.results.map((recipe) => data.add(recipe))
                     }
                     
                 break
                 case 'ingredientsTagTab' :
                     if (options.ingredientsTagTab.size > 0) {
                        filterWithIngredients(data, options)
-                       for(let result of options.results) {
-                        data.add(result)
-                    }
+                       Array.from(options.results).map((recipe) => data.add(recipe))
                     }
                 break
                 case 'ustensilsTagTab' :
                     if (options.ustensilsTagTab.size > 0) {
                         filterWithUstensils(data, options)
-                        for(let result of options.results) {
-                            data.add(result)
-                        }
+                        Array.from(options.results).map((recipe) => data.add(recipe))
                     }
                 break
                 case 'appliancesTagTab' :
                     if (options.appliancesTagTab.size > 0) {
                         filterWithAppliances(data, options)
-                        
+                        Array.from(options.results).map((recipe) => data.add(recipe))
                     }
                 break
             }
@@ -176,7 +185,7 @@ export default function globalSearch(recipes) {
 
     function displayRecipes(results) {
         cardContainer.innerHTML = "";
-        for(let recipe of results) {
+        results.forEach((recipe) => {
             const card = document.createElement('article');
             card.classList.add('card__Recipes');
             card.innerHTML = `<a href="">
@@ -197,21 +206,26 @@ export default function globalSearch(recipes) {
                 containerIngredients.innerHTML = inner
                 divContainer.appendChild(containerIngredients)
             })
-        }
+        })
        
     }
-
+    function displaysNoResult() {
+        cardContainer.innerHTML = "";
+        const message = document.createElement('p');
+        message.textContent = "aucun résultat trouvé"
+        cardContainer.appendChild(message);
+    }
     //------------------------------------------------------------------
     //------------------------------------------------------------------
     //------------------------------------------------------------------
 
     function addSearchListener(e, options) {
-        // const object = tagFactory(e)
-        // const tag = object.displayTag(e, options)
-        // matchesRecipes(options)
-        // addListenerTag(tag, options)
+        const object = tagFactory(e)
+        const tag = object.displayTag(e, options)
+        matchesRecipes(options)
+        addListenerTag(tag, options)
     }
-
+ 
     function addListenerTag(tag, options) {
         tag.addEventListener('click', (e) => removeTag(e, options))
         return tag
@@ -222,6 +236,8 @@ export default function globalSearch(recipes) {
         let tag
         (e.target.classList[0] === "far" ) ? tag = e.target.parentNode : tag = e.target
         options.results = recipes
+        options.results = new Set()
+        recipes.map((recipe) => options.results.add(recipe))
         switch(tag.classList[1]) {
             case 'tag--ingredient' :
                 options.ingredientsTagTab.delete(tag.textContent)
@@ -241,6 +257,10 @@ export default function globalSearch(recipes) {
     return {
         matchesRecipes, 
         displayRecipes,
-        displayAdvencedSearchs
+        displayAdvencedSearchs,
+        displayIngredientSearchs,
+        displayApplianceSearchs,
+        displayUstensilSearchs, 
+        displaysNoResult
     }
 }

@@ -17,57 +17,70 @@ searchRecipe.addEventListener('input', (e) => {
     if (e.currentTarget.value.length >= 3) {
         options.input = e.currentTarget.value
         globalSearchObject.matchesRecipes(options)
+        if (options.results.length !== 0) {
+            globalSearchObject.displayAdvencedSearchs(options)
+        } else {
+            globalSearchObject.displaysNoResult();
+        }
+    } else {
+        options.input = ""
+        globalSearchObject.matchesRecipes(options)
+        globalSearchObject.displayAdvencedSearchs(options)
     }
 })
-console.log(recipes)
 
-// let result = [];
-// const searchRecipe = document.querySelector('.search__recipe');
+const advencedSearchInput = document.querySelectorAll('.search__input')
+advencedSearchInput.forEach((searchInput) => {
+    searchInput.addEventListener('input', (e) => {
+        switch(e.target.classList[1]) {
+            case 'input__ingredient':
+                globalSearchObject.displayIngredientSearchs(options)
+            break
+            case 'input__appliance':
+                globalSearchObject.displayApplianceSearchs(options)
+            break
+            case 'input__ustensil':
+                globalSearchObject.displayUstensilSearchs(options)
+            break
+        }
+        const containerSearchs = e.target.parentNode.querySelector('.search__tag')
+        const tab = e.target.parentNode.querySelectorAll('.searchTag')
+        const inputRegex = new RegExp(e.target.value.toLowerCase())
+        Array.from(tab).filter((search) => {
+            if(inputRegex.test(search.textContent.toLowerCase())) {
+                return true
+            } else {
+                containerSearchs.removeChild(search)
+                return false
+            }
+        })
+    })
+})
+//===================================================================================
+//===================================================================================
+//===================================================================================
 
-// displayCard(recipes);
-// searchRecipe.addEventListener('input', findMatches);
+const searchAdvencedContainer = document.querySelectorAll(".advencedSearch__container");
+searchAdvencedContainer.forEach((div)=> {
+    div.addEventListener('mouseenter', displaySearchAdvenced)
+    div.addEventListener('mouseleave', displayBtnSearchAdvenced)
+    
+})
 
-// function stringifyIngredients(ingredient, quantity = "", unit = "") {
-//     return`${ingredient} : ${quantity} ${unit}`
-            
-// }
+function displaySearchAdvenced(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    const btn = e.currentTarget.querySelector("button")
+    const div = e.currentTarget.querySelector(".search__tag__container")
+    btn.style.display = "none"
+    btn.nextElementSibling.style.display = "grid"
+    div.innerHTML != "" ? div.style.display = "grid" : div.style.display = "none"
+}
 
-// function displayCard(data) {
-//     const cardContainer = document.querySelector("main");
-//     cardContainer.innerHTML = "";
-//     data.forEach((recipe) => {
-//         const card = document.createElement('article');
-//         card.classList.add('card__Recipes');
-//         card.innerHTML = `<a href="">
-//                             <img src="" alt=""></img>
-//                             <span class="card__title">${recipe.name}</span>
-//                             <span class="card__duration">${recipe.time} min</span>
-//                             <div class="card__ingredients"></div>
-//                             <span class="card__recipe">${recipe.description}</span>
-//                         </a>`;
-//         cardContainer.appendChild(card);
-//         const dataCardContainer = card.querySelector(".card__ingredients")
-        
-//         recipe.ingredients.map((object) => {
-//             const inner =  stringifyIngredients(object.ingredient, object.quantity, object.unit)
-//             const divIngredients = document.createElement('span')
-//             divIngredients.classList.add("ingedient__span")
-//             divIngredients.innerHTML = inner
-//             dataCardContainer.appendChild(divIngredients)
-//         })
-
-//     })
-// }
-
-// function findMatches(e) {
-//     if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length < 3) {
-//         displayCard(recipes);
-//     } else if (e.currentTarget.classList[0] === "search__recipe" && e.currentTarget.value.length >= 3) {
-//         result = recipes.filter(recipe => 
-//             recipe.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1
-//             || recipe.ingredients.map((item) => {return item.ingredient}).join(" ").toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) !== -1
-//             || recipe.description.toLowerCase().indexOf(e.currentTarget.value.toLowerCase())!== -1
-//         )
-//         displayCard(result)       
-//     }
-// }
+function displayBtnSearchAdvenced(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    const btn = e.target.querySelector("button")
+    btn.style.display = "block"
+    btn.nextElementSibling.style.display = "none"
+}

@@ -1,0 +1,135 @@
+.search__ingredient,
+.search__appliance,
+.search__ustensil  {
+    grid-template-rows: 1fr auto;
+    grid-template-columns: auto auto;
+    align-items: center;
+   
+
+    .search__tag {
+        grid-column: 1 /span 2;
+        grid-row: 2 ;
+    }
+    input {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    i {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: flex-end;
+    }
+}
+
+.btn__ingredient {
+    background: #3282F7;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+    height: 69px;
+}
+
+.btn__appliance {
+    background: #68D9A4;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+    height: 69px;
+}
+.btn__ustensil {
+    background: #ED6454;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+    height: 69px;
+}
+
+.search__ingredient {
+    background: #3282F7;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+
+    .search__input {
+        background: #3282F7;
+    }
+}
+
+.search__appliance {
+    background: #68D9A4;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+
+    .search__input {
+        background: #68D9A4;
+    }
+}
+
+.search__ustensil {
+    background: #ED6454;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 24px;
+    color: white;
+    margin-bottom: 25px;
+
+    .search__input {
+        background: #ED6454;
+    }
+}
+
+.search__input {
+    width: 100%;
+    border: none;
+    padding: 24px;
+    color: white;
+    height: 69px;
+    outline: none;
+
+    ::placeholder{
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 22px;
+        color: white;
+        opacity: 1;
+    }
+}
+.search__tag__container {
+    // flex-direction: column;
+    width: fit-content;
+    // max-width: 700px;
+    display: none;
+}
+.search__tag {
+    display : grid;
+    // grid-auto-flow: column;
+    grid-template-columns:repeat(4, auto);
+    // grid-template-rows: 1fr;
+    
+    width: 100%;
+    border: none;
+    padding: 24px;
+    color: white;
+    gap: 15px;
+    
+
+}
+.searchTag {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
