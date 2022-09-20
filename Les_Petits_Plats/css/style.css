@@ -25,34 +25,28 @@
   justify-self: flex-end;
 }
 
-.btn__ingredient {
-  background: #3282F7;
+.btn__ingredient, .btn__appliance, .btn__ustensil {
   border-radius: 5px;
   border: none;
-  padding: 0px 24px;
+  padding: 0px 18px;
   color: white;
   margin-bottom: 25px;
   height: 69px;
+}
+.btn__ingredient i, .btn__appliance i, .btn__ustensil i {
+  display: none;
+}
+
+.btn__ingredient {
+  background: #3282F7;
 }
 
 .btn__appliance {
   background: #68D9A4;
-  border-radius: 5px;
-  border: none;
-  padding: 0px 24px;
-  color: white;
-  margin-bottom: 25px;
-  height: 69px;
 }
 
 .btn__ustensil {
   background: #ED6454;
-  border-radius: 5px;
-  border: none;
-  padding: 0px 24px;
-  color: white;
-  margin-bottom: 25px;
-  height: 69px;
 }
 
 .search__ingredient {
@@ -116,7 +110,6 @@
 
 .search__tag {
   display: grid;
-  grid-template-columns: repeat(4, auto);
   width: 100%;
   border: none;
   padding: 24px;
@@ -270,6 +263,7 @@ header form .tag__container {
   display: flex;
   flex-direction: row;
   gap: 20px;
+  padding-bottom: 20px;
 }
 header form .activeTag {
   height: 37px;
@@ -298,6 +292,7 @@ header form .tag--ustensil {
 header form .advencedSearch__wrap {
   width: 100%;
   display: flex;
+  justify-content: space-between;
   gap: 30px;
   grid-row: 3;
 }
@@ -305,24 +300,59 @@ header form .advencedSearch__container {
   bottom: 200px;
   z-index: 1;
 }
-header form .advencedSearch__ingredient__container {
-  grid-row: 3;
-}
-header form .advencedSearch__appliance__container {
-  grid-row: 3;
-}
-header form .advencedSearch__utensils__container {
-  grid-row: 3;
-}
 
 main {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 30px;
 }
 
 body {
-  margin: 50px 100px;
+  margin: 20px 50px;
+}
+
+@media screen and (min-width: 550px) {
+  main {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .btn__ingredient, .btn__appliance, .btn__ustensil {
+    padding: 0px 24px;
+  }
+  .btn__ingredient i, .btn__appliance i, .btn__ustensil i {
+    display: inline;
+    padding-left: 5px;
+  }
+
+  header form .advencedSearch__wrap {
+    justify-content: left;
+  }
+
+  .search__tag {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+@media screen and (min-width: 980px) {
+  body {
+    margin: 50px 100px;
+  }
+
+  main {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .search__tag {
+    grid-template-columns: repeat(4, auto);
+  }
+}
+@media screen and (min-width: 1580px) {
+  main {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .search__tag {
+    grid-template-columns: repeat(5, auto);
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

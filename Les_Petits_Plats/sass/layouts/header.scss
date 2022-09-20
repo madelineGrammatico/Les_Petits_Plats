@@ -30,6 +30,7 @@ header {
         display: flex;
         flex-direction: row;
         gap: 20px;
+         padding-bottom: 20px;
        }
        .activeTag {
         height: 37px;
@@ -59,6 +60,7 @@ header {
        .advencedSearch__wrap {
           width: 100%;
           display: flex;
+          justify-content: space-between;
           gap: 30px;
           grid-row: 3;
 
@@ -68,16 +70,16 @@ header {
             z-index: 1;
         }
         
-       .advencedSearch__ingredient__container {
-            grid-row: 3;
-        }
+    //    .advencedSearch__ingredient__container {
+    //         grid-row: 3;
+    //     }
         
-        .advencedSearch__appliance__container {
-            grid-row: 3;
-        }
+    //     .advencedSearch__appliance__container {
+    //         grid-row: 3;
+    //     }
         
-        .advencedSearch__utensils__container {
-            grid-row: 3;
-        }
+    //     .advencedSearch__utensils__container {
+    //         grid-row: 3;
+    //     }
    }   
 }
