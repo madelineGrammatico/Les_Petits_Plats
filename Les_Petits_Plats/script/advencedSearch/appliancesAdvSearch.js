@@ -4,7 +4,7 @@ export default function appliancesAdvSearch() {
         Array.from(options.results).map((recipe) => {
             searchsTagTab.add(recipe.appliance.toLowerCase())
         })
-        return searchsTagTab
+        return Array.from(searchsTagTab).sort()
     }
     return {addSearchAppliances}
 }

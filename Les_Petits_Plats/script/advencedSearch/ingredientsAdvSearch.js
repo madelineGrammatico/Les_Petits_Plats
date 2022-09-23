@@ -1,12 +1,12 @@
 export default function ingredientsAdvSearch() {
     function addSearchIngredients(options) { 
         const searchsTagTab = new Set()
-        Array.from(options.results).map((recipe) => {
+        options.results.forEach((recipe) => {
            recipe.ingredients.forEach((item) => {
                 searchsTagTab.add(item.ingredient.toLowerCase())
             })
         })
-        return searchsTagTab
+        return Array.from(searchsTagTab).sort()
     }
     return {addSearchIngredients}
 }

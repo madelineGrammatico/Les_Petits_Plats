@@ -6,7 +6,7 @@ export default function ustensilsAdvSearch() {
                 searchsTagTab.add(ustensil.toLowerCase())
             })
         })
-        return searchsTagTab
+        return Array.from(searchsTagTab).sort()
     }
     return {addSearchUstensils}
 }
