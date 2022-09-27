@@ -47,8 +47,6 @@ export default function globalSearch(recipes) {
         displayUstensilSearchs(options)
     }
 
-
-
     function filterWithInput(options) {
         const regex = new RegExp(options.input.toLowerCase())
         options.results = recipes.filter(recipe => 
@@ -61,124 +59,70 @@ export default function globalSearch(recipes) {
     }
 
     function filterWithIngredients(data, options) {
-            options.ingredientsTagTab.forEach((tag)=> {
-                const regex = new RegExp(tag.toLowerCase())
-                data = Array.from(data).filter((recipe) => {
-                    const isValid = Array.from(recipe).some((ingredients) => { 
-                        console.log(ingredients)
-                        regex.test(ingredients.ingredient.toLowerCase()) })
-                    console.log(isValid)
-                    if (isValid) { return true } 
-                    else { return false }
-                })
+        options.ingredientsTagTab.forEach((tag) => {
+            const regex = new RegExp(tag.toLowerCase())
+            data = Array.from(data).filter((recipe) => {
+                const isValid = recipe.ingredients.some(({ingredient}) => { 
+                    return regex.test(ingredient.toLowerCase()) })
+                if (isValid) { return true } 
+                else { return false }
             })
-            //     for(let tag of options.ingredientsTagTab){
-            //     let isTagValid = false
-            //     let i = 0
-            //     recipe.ingredients.map(() => {
-            //         const regex = new RegExp(tag.toLowerCase())
-            //         if (regex.test(recipe.ingredients[i].ingredient.toLowerCase())) {
-            //             isTagValid = true
-            //         }
-            //         i++
-            //     })
-            //     if (isTagValid) { 
-            //         isValid = true
-            
-            //     } 
-            //     else { 
-            //         isValid = false
-            //         break
-            //     }
-            // }
-            // if (isValid === false) { 
-            //     data.delete(recipe) 
-            //     return false
-            // } else {return true}
-        // })
-        options.results = data
+        })
+        options.results = new Set(data)
+        return new Set(data)
     }
     function filterWithUstensils(data, options) {
-        Array.from(data).filter((recipe) => {
-            let isValid = false
-            for(let tag of options.ustensilsTagTab){
-                let isTagValid = false
-                let i= 0
-                recipe.ustensils.map(() => {
-                    const regex = new RegExp(tag.toLowerCase())
-                    if (regex.test(recipe.ustensils[i].toLowerCase())) {
-                        isTagValid = true
-                    }
-                    i++
-                })
-                if (isTagValid) {isValid = true}
-                else { 
-                    isValid = false
-                    break
-                }
-            }
-            if (isValid === false) { 
-                data.delete(recipe) 
-                return false
-            } else {return true}
+        options.ustensilsTagTab.forEach((tag) => {
+            const regex = new RegExp(tag.toLowerCase())
+            data = Array.from(data).filter((recipe) => {
+                const isValid = recipe.ustensils.some((ustensil) => { 
+                    return regex.test(ustensil.toLowerCase()) })
+                if (isValid) { return true } 
+                else { return false }
+            })
         })
-        options.results = data
+        options.results = new Set(data)
+        return new Set(data)
     }
     function filterWithAppliances(data, options) {
-        Array.from(data).filter((recipe) => {
-            let isValid = false
-            for(let tag of options.appliancesTagTab){
-                let isTagValid
-                const regex = new RegExp(tag.toLowerCase())
-                if (regex.test(recipe.appliance.toLowerCase())) {
-                    isTagValid = true
-                }
-                if(isTagValid) isValid = true
-                else {
-                    isValid = false
-                    break
-                }
-            }
-            if (isValid === false) { 
-                data.delete(recipe) 
-                return false
-            } else {return true}
+        options.appliancesTagTab.forEach((tag) => {
+            const regex = new RegExp(tag.toLowerCase())
+            data = Array.from(data).filter((recipe) => {
+                if (regex.test(recipe.appliance.toLowerCase())) { return true }
+                else { return false }
+            })
         })
-        options.results = data
+        options.results = new Set(data)
+        return new Set(data)
     }
 
     function matchesRecipes(options) {
         let data = new Set()
-        console.log(options)
         for(let option in options) {
-            
             switch(option) {
                 case 'input' :
-                    if(options.input === "") {
+                    if (options.input === "") {
                         recipes.map((recipe) => data.add(recipe))
-                        recipes.map((recipe) => options.results.add(recipe))
+                        Object.values(recipes).map((recipe) => options.results.add(recipe))
                     } else {
                         filterWithInput(options)
-                        options.results.map((recipe) => data.add(recipe))
+                        Array.from(options.results).map((recipe) => data.add(recipe))
                     }
                     
                 break
                 case 'ingredientsTagTab' :
                     if (options.ingredientsTagTab.size > 0) {
-                       filterWithIngredients(data, options)
-                       Array.from(options.results).map((recipe) => data.add(recipe))
+                       data = filterWithIngredients(data, options)
                     }
                 break
                 case 'ustensilsTagTab' :
                     if (options.ustensilsTagTab.size > 0) {
                         filterWithUstensils(data, options)
-                        Array.from(options.results).map((recipe) => data.add(recipe))
                     }
                 break
                 case 'appliancesTagTab' :
                     if (options.appliancesTagTab.size > 0) {
                         filterWithAppliances(data, options)
-                        Array.from(options.results).map((recipe) => data.add(recipe))
                     }
                 break
             }
