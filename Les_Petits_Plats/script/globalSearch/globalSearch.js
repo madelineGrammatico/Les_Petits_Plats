@@ -61,32 +61,41 @@ export default function globalSearch(recipes) {
     }
 
     function filterWithIngredients(data, options) {
-        Array.from(data).filter((recipe) => {
-            let isValid = false
-                for(let tag of options.ingredientsTagTab){
-                let isTagValid = false
-                let i = 0
-                recipe.ingredients.map(() => {
-                    const regex = new RegExp(tag.toLowerCase())
-                    if (regex.test(recipe.ingredients[i].ingredient.toLowerCase())) {
-                        isTagValid = true
-                    }
-                    i++
+            options.ingredientsTagTab.forEach((tag)=> {
+                const regex = new RegExp(tag.toLowerCase())
+                data = Array.from(data).filter((recipe) => {
+                    const isValid = Array.from(recipe).some((ingredients) => { 
+                        console.log(ingredients)
+                        regex.test(ingredients.ingredient.toLowerCase()) })
+                    console.log(isValid)
+                    if (isValid) { return true } 
+                    else { return false }
                 })
-                if (isTagValid) { 
-                    isValid = true
+            })
+            //     for(let tag of options.ingredientsTagTab){
+            //     let isTagValid = false
+            //     let i = 0
+            //     recipe.ingredients.map(() => {
+            //         const regex = new RegExp(tag.toLowerCase())
+            //         if (regex.test(recipe.ingredients[i].ingredient.toLowerCase())) {
+            //             isTagValid = true
+            //         }
+            //         i++
+            //     })
+            //     if (isTagValid) { 
+            //         isValid = true
             
-                } 
-                else { 
-                    isValid = false
-                    break
-                }
-            }
-            if (isValid === false) { 
-                data.delete(recipe) 
-                return false
-            } else {return true}
-        })
+            //     } 
+            //     else { 
+            //         isValid = false
+            //         break
+            //     }
+            // }
+            // if (isValid === false) { 
+            //     data.delete(recipe) 
+            //     return false
+            // } else {return true}
+        // })
         options.results = data
     }
     function filterWithUstensils(data, options) {

@@ -1,7 +1,7 @@
 export default function appliancesAdvSearch() {
     function addSearchAppliances(options) {
         const searchsTagTab = new Set()
-        Array.from(options.results).map((recipe) => {
+        options.results.forEach((recipe) => {
             searchsTagTab.add(recipe.appliance.toLowerCase())
         })
         return Array.from(searchsTagTab).sort()
