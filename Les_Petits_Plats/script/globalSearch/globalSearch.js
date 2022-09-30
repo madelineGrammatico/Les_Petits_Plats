@@ -46,16 +46,17 @@ export default function globalSearch(recipes) {
         displayApplianceSearchs(options)
         displayUstensilSearchs(options)
     }
-
+    function normalizeString(string) {
+        return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '', /^.*abc$/)
+    }
     function filterWithInput(options) {
-        const regex = new RegExp(options.input.toLowerCase())
-        options.results = recipes.filter(recipe => 
-            (regex.test(recipe.name.toLowerCase())
-            ||recipe.ingredients.forEach((item) => regex.test(item.ingredient.toLowerCase()))
-            ||regex.test(recipe.description.toLowerCase())) 
-            
-        )
-    
+        const text = normalizeString(options.input)
+        const regex = new RegExp(text.toLowerCase())
+        options.results = new Set(recipes.filter(recipe => 
+            (regex.test(normalizeString(recipe.name).toLowerCase())
+            ||recipe.ingredients.forEach((item) => regex.test(normalizeString(item.ingredient).toLowerCase()))
+            ||regex.test(normalizeString(recipe.description).toLowerCase())) 
+        ))
     }
 
     function filterWithIngredients(data, options) {
@@ -108,7 +109,6 @@ export default function globalSearch(recipes) {
                         filterWithInput(options)
                         Array.from(options.results).map((recipe) => data.add(recipe))
                     }
-                    
                 break
                 case 'ingredientsTagTab' :
                     if (options.ingredientsTagTab.size > 0) {
@@ -126,7 +126,6 @@ export default function globalSearch(recipes) {
                     }
                 break
             }
-            
         }
         displayRecipes(options.results)
         return {options}
