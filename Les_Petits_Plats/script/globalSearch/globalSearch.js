@@ -63,10 +63,7 @@ export default function globalSearch(recipes) {
         options.ingredientsTagTab.forEach((tag) => {
             const regex = new RegExp(tag.toLowerCase())
             data = Array.from(data).filter((recipe) => {
-                const isValid = recipe.ingredients.some(({ingredient}) => { 
-                    return regex.test(ingredient.toLowerCase()) })
-                if (isValid) { return true } 
-                else { return false }
+                return recipe.ingredients.some(({ingredient}) => regex.test(ingredient.toLowerCase()) )
             })
         })
         options.results = new Set(data)
