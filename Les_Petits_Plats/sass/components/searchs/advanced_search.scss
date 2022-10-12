@@ -1,4 +1,3 @@
-
 .search__ingredient,
 .search__appliance,
 .search__ustensil  {
@@ -21,34 +20,26 @@
         justify-self: flex-end;
     }
 }
-
+.btn__ingredient, .btn__appliance, .btn__ustensil {
+    border-radius: 5px;
+    border: none;
+    padding: 0px 18px;
+    color: white;
+    margin-bottom: 25px;
+    height: 69px;
+    i {
+        display: none;
+    }
+}
 .btn__ingredient {
     background: #3282F7;
-    border-radius: 5px;
-    border: none;
-    padding: 0px 24px;
-    color: white;
-    margin-bottom: 25px;
-    height: 69px;
 }
 
-.btn__appliance {
+.btn__appliance  {
     background: #68D9A4;
-    border-radius: 5px;
-    border: none;
-    padding: 0px 24px;
-    color: white;
-    margin-bottom: 25px;
-    height: 69px;
 }
 .btn__ustensil {
     background: #ED6454;
-    border-radius: 5px;
-    border: none;
-    padding: 0px 24px;
-    color: white;
-    margin-bottom: 25px;
-    height: 69px;
 }
 
 .search__ingredient {
@@ -109,17 +100,11 @@
     }
 }
 .search__tag__container {
-    // flex-direction: column;
     width: fit-content;
-    // max-width: 700px;
     display: none;
 }
 .search__tag {
     display : grid;
-    // grid-auto-flow: column;
-    grid-template-columns:repeat(4, auto);
-    // grid-template-rows: 1fr;
-    
     width: 100%;
     border: none;
     padding: 24px;

@@ -1,3 +1,43 @@
 body {
-    margin: 50px 100px;
+    margin: 20px 50px;
+}
+
+@media screen and (min-width:550px) {
+    main {
+        grid-template-columns: 1fr 1fr;
+    }
+    .btn__ingredient, .btn__appliance, .btn__ustensil {
+        padding: 0px 24px;
+        i {
+            display: inline;
+            padding-left: 5px;
+        }
+    }
+    header form .advencedSearch__wrap {
+        justify-content: left;
+    }
+    .search__tag {
+        grid-template-columns:repeat(2, auto);
+    }
+}
+
+@media screen and (min-width:980px) {
+    body {
+        margin: 50px 100px;
+    }
+    main {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .search__tag {
+        grid-template-columns:repeat(4, auto);
+    }
+    
+}
+@media screen and (min-width:1580px) {
+    main {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .search__tag {
+        grid-template-columns:repeat(5, auto);
+    }
 }
