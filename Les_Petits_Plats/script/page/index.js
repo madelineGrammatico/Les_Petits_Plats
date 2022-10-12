@@ -17,7 +17,7 @@ searchRecipe.addEventListener('input', (e) => {
     if (e.currentTarget.value.length >= 3) {
         options.input = e.currentTarget.value
         globalSearchObject.matchesRecipes(options)
-        if (options.results.length !== 0) {
+        if (options.results.size !== 0) {
             globalSearchObject.displayAdvencedSearchs(options)
         } else {
             globalSearchObject.displaysNoResult();
