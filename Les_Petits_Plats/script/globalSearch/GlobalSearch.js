@@ -93,7 +93,7 @@ export default class GlobalSearch {
                 let isTagValid = false
                 let i= 0
                 for(i; i < recipe.ustensils.length; i++){
-                    const regex = new RegExp(tag.toLowerCase())
+                    const regex = new RegExp(tag.toLowerCase().replace("(", "\\(").replace(")", "\\)"))
                     if (regex.test(recipe.ustensils[i].toLowerCase())) {
                         isTagValid = true
                     }

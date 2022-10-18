@@ -21,7 +21,6 @@ searchRecipe.addEventListener('input', (e) => {
         if (options.results.size !== 0) {
             globalSearch.displayAdvencedSearchs(options)
         } else {
-            console.log('no results')
             globalSearch.displaysNoResult();
         }
     } else {
